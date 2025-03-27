@@ -12,26 +12,26 @@
             padding: 0;
             display: flex;
             flex-direction: column;
-            min-height: 100vh; /* Fyller hele skjermen */
+            min-height: 100vh;
             background-color: #f4f4f4;
             font-family: 'Playfair Display', serif;
             color: #111;
             text-align: center;
         }
         .container {
-            max-width: 800px; /* Samme bredde som i CV-en */
-            margin: 0 auto; /* Sentrert horisontalt */
-            padding: 20px; /* Litt luft på sidene, som i CV-en */
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
             display: flex;
             flex-direction: column;
-            flex: 1; /* Lar containeren vokse og skyve knappene ned */
+            flex: 1;
         }
         .content {
-            flex: 1; /* Skyver knappene ned ved å ta opp tilgjengelig plass */
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            margin-bottom: 20px; /* Kontrollerer avstanden til knappene */
         }
         h1 {
             font-size: 4rem;
@@ -49,9 +49,9 @@
         }
         .button-container {
             display: flex;
-            flex-direction: row; /* Knappene på en linje */
+            flex-direction: row;
             gap: 20px;
-            padding-bottom: 20px; /* Avstand fra bunnen */
+            padding-bottom: 20px;
             opacity: 0;
             animation: fadeInButtons 2s ease-in forwards 6s;
         }
@@ -69,13 +69,13 @@
         .button-container button:hover {
             color: #555;
         }
-        @media (max-width: 600px) { /* Tilpasser knapper på små skjermer */
+        @media (max-width: 600px) {
             .button-container {
-                flex-direction: column; /* Stapler knappene på mobil */
+                flex-direction: column;
                 gap: 10px;
             }
             h1 {
-                font-size: 2.5rem; /* Mindre tekst på mobil */
+                font-size: 2.5rem;
             }
             .subtext {
                 font-size: 1rem;
