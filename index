@@ -12,13 +12,14 @@
             padding: 0;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: center; /* Holder hovedinnholdet sentrert */
             align-items: center;
-            height: 100vh;
+            min-height: 100vh; /* Endret til min-height for å tillate innhold å vokse */
             background-color: #f4f4f4;
             font-family: 'Playfair Display', serif;
             color: #111;
             text-align: center;
+            position: relative; /* Legger til relativ posisjonering for å støtte absolute elementer */
         }
         h1 {
             font-size: 4rem;
@@ -35,10 +36,11 @@
             animation: fadeInText 2s ease-in forwards 4s;
         }
         .button-container {
+            position: absolute; /* Flytter knappene ut av normal flyt */
+            bottom: 20px; /* Avstand fra bunnen */
             display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 20px;
+            flex-direction: row; /* Endrer til rad for å ha knappene ved siden av hverandre */
+            gap: 20px; /* Øker avstanden mellom knappene */
             opacity: 0;
             animation: fadeInButtons 2s ease-in forwards 6s;
         }
@@ -76,12 +78,12 @@
 <body>
     <div>
         <h1 id="title">Dan Terje Norli</h1>
-        <p class="subtext">Prosjektledelse | AI | Programmering </p>
-        <div class="button-container" id="buttons">
-            <button onclick="location.href='pa-jobb.html'">På jobb</button>
-            <button onclick="location.href='cv.html'">CV</button>
-            <button onclick="location.href='utenfor-jobb.html'">Utenfor jobb</button>
-        </div>
+        <p class="subtext">Prosjektledelse | AI | Programmering</p>
+    </div>
+    <div class="button-container" id="buttons">
+        <button onclick="location.href='pa-jobb.html'">På jobb</button>
+        <button onclick="location.href='cv.html'">CV</button>
+        <button onclick="location.href='utenfor-jobb.html'">Utenfor jobb</button>
     </div>
 </body>
 </html>
