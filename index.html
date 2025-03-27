@@ -12,14 +12,26 @@
             padding: 0;
             display: flex;
             flex-direction: column;
-            justify-content: center; /* Holder hovedinnholdet sentrert */
-            align-items: center;
-            min-height: 100vh; /* Endret til min-height for å tillate innhold å vokse */
+            min-height: 100vh; /* Fyller hele skjermen */
             background-color: #f4f4f4;
             font-family: 'Playfair Display', serif;
             color: #111;
             text-align: center;
-            position: relative; /* Legger til relativ posisjonering for å støtte absolute elementer */
+        }
+        .container {
+            max-width: 800px; /* Samme bredde som i CV-en */
+            margin: 0 auto; /* Sentrert horisontalt */
+            padding: 20px; /* Litt luft på sidene, som i CV-en */
+            display: flex;
+            flex-direction: column;
+            flex: 1; /* Lar containeren vokse og skyve knappene ned */
+        }
+        .content {
+            flex: 1; /* Skyver knappene ned ved å ta opp tilgjengelig plass */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
         h1 {
             font-size: 4rem;
@@ -36,11 +48,10 @@
             animation: fadeInText 2s ease-in forwards 4s;
         }
         .button-container {
-            position: absolute; /* Flytter knappene ut av normal flyt */
-            bottom: 20px; /* Avstand fra bunnen */
             display: flex;
-            flex-direction: row; /* Endrer til rad for å ha knappene ved siden av hverandre */
-            gap: 20px; /* Øker avstanden mellom knappene */
+            flex-direction: row; /* Knappene på en linje */
+            gap: 20px;
+            padding-bottom: 20px; /* Avstand fra bunnen */
             opacity: 0;
             animation: fadeInButtons 2s ease-in forwards 6s;
         }
@@ -57,6 +68,21 @@
         }
         .button-container button:hover {
             color: #555;
+        }
+        @media (max-width: 600px) { /* Tilpasser knapper på små skjermer */
+            .button-container {
+                flex-direction: column; /* Stapler knappene på mobil */
+                gap: 10px;
+            }
+            h1 {
+                font-size: 2.5rem; /* Mindre tekst på mobil */
+            }
+            .subtext {
+                font-size: 1rem;
+            }
+            .button-container button {
+                font-size: 1.2rem;
+            }
         }
         @keyframes typing {
             from { width: 0; }
@@ -76,14 +102,16 @@
     </style>
 </head>
 <body>
-    <div>
-        <h1 id="title">Dan Terje Norli</h1>
-        <p class="subtext">Prosjektledelse | AI | Programmering</p>
-    </div>
-    <div class="button-container" id="buttons">
-        <button onclick="location.href='pa-jobb.html'">På jobb</button>
-        <button onclick="location.href='cv.html'">CV</button>
-        <button onclick="location.href='utenfor-jobb.html'">Utenfor jobb</button>
+    <div class="container">
+        <div class="content">
+            <h1 id="title">Dan Terje Norli</h1>
+            <p class="subtext">Prosjektledelse | AI | Programmering</p>
+        </div>
+        <div class="button-container" id="buttons">
+            <button onclick="location.href='pa-jobb.html'">På jobb</button>
+            <button onclick="location.href='cv.html'">CV</button>
+            <button onclick="location.href='utenfor-jobb.html'">Utenfor jobb</button>
+        </div>
     </div>
 </body>
 </html>
