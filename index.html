@@ -32,6 +32,7 @@
             justify-content: center;
             align-items: center;
             margin-bottom: 20px;
+            position: relative; /* For å posisjonere phoenix relativt til .content */
         }
         h1 {
             font-size: 4rem;
@@ -69,24 +70,24 @@
         .button-container button:hover {
             color: #555;
         }
-
-        /* Føniks-animasjon */
         .phoenix {
             width: 100px;
             height: 100px;
-            position: relative;
-            margin: 0 auto;
+            position: absolute;
+            top: -80px; /* Plasserer føniksen over h1 */
+            left: 50%;
+            transform: translateX(-50%); /* Sentrering horisontalt */
             opacity: 0;
-            animation: riseFromAshes 4s ease-in-out forwards 8s; /* Starter etter knapper */
+            animation: riseFromAshes 4s ease-in-out forwards 8s;
         }
         .phoenix::before {
             content: '';
             position: absolute;
             width: 100%;
             height: 100%;
-            background: #111; /* Ensfarget, matcher teksten */
-            clip-path: polygon(50% 0%, 20% 40%, 0% 100%, 50% 80%, 100% 100%, 80% 40%); /* Minimalistisk føniks-form */
-            animation: flapWings 2s infinite alternate ease-in-out; /* Vingeflaksing */
+            background: #111;
+            clip-path: polygon(50% 0%, 20% 40%, 0% 100%, 50% 80%, 100% 100%, 80% 40%);
+            animation: flapWings 2s infinite alternate ease-in-out;
         }
 
         @media (max-width: 600px) {
@@ -106,6 +107,7 @@
             .phoenix {
                 width: 70px;
                 height: 70px;
+                top: -60px; /* Justert for mindre skjerm */
             }
         }
 
@@ -125,8 +127,8 @@
             to { opacity: 1; transform: translateY(0); }
         }
         @keyframes riseFromAshes {
-            0% { opacity: 0; transform: translateY(50px); }
-            100% { opacity: 1; transform: translateY(0); }
+            0% { opacity: 0; transform: translateY(50px) translateX(-50%); }
+            100% { opacity: 1; transform: translateY(0) translateX(-50%); }
         }
         @keyframes flapWings {
             0% { clip-path: polygon(50% 0%, 20% 40%, 0% 100%, 50% 80%, 100% 100%, 80% 40%); }
@@ -137,6 +139,7 @@
 <body>
     <div class="container">
         <div class="content">
+            <div class="phoenix"></div> <!-- Flyttet til over h1 -->
             <h1 id="title">Dan Terje Norli</h1>
             <p class="subtext">Prosjektledelse | AI | Programmering</p>
         </div>
@@ -145,7 +148,6 @@
             <button onclick="location.href='cv.html'">CV</button>
             <button onclick="location.href='utenfor-jobb.html'">Utenfor jobb</button>
         </div>
-        <div class="phoenix"></div> <!-- Føniks-animasjon -->
     </div>
 </body>
 </html>
