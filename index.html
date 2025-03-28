@@ -52,8 +52,8 @@
         .button-container {
             display: flex;
             flex-direction: row;
-            justify-content: center; /* Sentrerer knappene horisontalt på desktop */
-            gap: 20px;
+            justify-content: center;
+            gap: 30px; /* Økt gap for litt mer luft */
             padding-bottom: 20px;
             opacity: 0;
             animation: fadeInButtons 2s ease-in forwards 4s;
@@ -67,7 +67,24 @@
             font-family: 'Playfair Display', serif;
             cursor: pointer;
             text-decoration: none;
+            position: relative; /* For å posisjonere streken */
             transition: color 0.3s ease-in-out;
+        }
+        .button-container button::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 1px; /* Tynn strek */
+            background-color: #111;
+            bottom: 5px; /* Avstand fra tekst til strek */
+            left: 0;
+            transform: scaleX(0); /* Starter usynlig */
+            transform-origin: bottom right;
+            transition: transform 0.3s ease-in-out; /* Animasjon for streken */
+        }
+        .button-container button:hover::after {
+            transform: scaleX(1); /* Streken vises ved hover */
+            transform-origin: bottom left;
         }
         .button-container button:hover {
             color: #555;
@@ -89,7 +106,7 @@
             }
             .button-container {
                 flex-direction: column;
-                gap: 10px;
+                gap: 15px; /* Mindre gap på mobil */
             }
             h1 {
                 font-size: 2.5rem;
