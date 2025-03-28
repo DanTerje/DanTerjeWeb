@@ -19,7 +19,7 @@
         .parallax {
             position: relative;
             height: 300px; /* Juster høyden etter behov */
-            background-size: cover; /* Fyller hele seksjonen */
+            background-size: contain; /* Sørger for at bildet er innenfor den maksimale bredden */
             background-attachment: fixed; /* Parallax-effekt */
             background-position: center; /* Sentraliserer bildet */
             display: flex;
@@ -30,7 +30,10 @@
             font-weight: bold;
             text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
             overflow: hidden; /* Hindrer at innholdet stikker ut */
+            max-width: 800px; /* Setter maksimal bredde på parallax-seksjonene */
+            margin: 0 auto; /* Sørger for at seksjonen er sentrert på skjermen */
         }
+        
         .text-section {
             padding: 50px;
             font-size: 1.5em;
