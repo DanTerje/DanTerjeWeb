@@ -15,23 +15,46 @@
             color: #111;
             text-align: center;
         }
-        /* Parallax stil */
+        /* Generelle stiler for desktop */
         .parallax {
             position: relative;
-            height: 600px; /* Juster høyden etter behov */
-            background-size: cover; /* Sørger for at bildet dekker hele området */
-            background-attachment: fixed; /* Parallax-effekt */
-            background-position: center; /* Sentraliserer bildet */
+            height: 300px;
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             font-size: 2em;
             font-weight: bold;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
-            overflow: hidden; /* Hindrer at innholdet stikker ut */
-            max-width: 800px; /* Setter maksimal bredde på parallax-seksjonene */
-            margin: 0 auto; /* Sørger for at seksjonen er sentrert på skjermen */
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+        }
+        
+        /* Medieforespørsel for mobile enheter */
+        @media only screen and (max-width: 768px) {
+            /* Deaktiver parallax-effekten på mobil */
+            .parallax {
+                background-attachment: scroll; /* Fjerner den faste bakgrunnen */
+                height: 200px; /* Reduser høyden på parallax-seksjonene */
+                background-position: center center;
+            }
+            
+            /* Juster fontstørrelse på mobil */
+            .parallax {
+                font-size: 1.5em;
+            }
+            
+            /* Juster tekstseksjonene for mobil */
+            .text-section {
+                font-size: 1.2em;
+                padding: 20px;
+            }
+        
+            /* Sørg for at bildene tilpasser seg bredden på mobil */
+            .parallax {
+                background-size: cover;
+            }
         }
         
         .text-section {
