@@ -39,7 +39,7 @@
             color: white;
             font-size: 2em;
             font-weight: bold;
-            padding-top: 30px; /* Økt padding for å flytte teksten opp */
+            padding-top: 30px;
             text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
         }
         .text-container {
@@ -64,6 +64,7 @@
             font-size: 1em;
             flex-grow: 1;
         }
+        
         @media only screen and (max-width: 768px) {
             .parallax {
                 background-attachment: scroll;
@@ -74,10 +75,12 @@
                 text-align: center;
             }
             .text-container img {
+                width: var(--mobile-img-width, 250px); /* Standard 250px, juster etter behov */
                 margin-left: 0;
                 margin-top: 10px;
             }
         }
+        
         #familie { background-image: url('bilder/Familie1.jpg'); }
         #jakt { background-image: url('bilder/Jakt1.HEIC'); }
         #fjell { background-image: url('bilder/Fjell1.HEIC'); }
@@ -97,15 +100,12 @@
             border-radius: 5px;
             transition: all 0.3s ease;
             margin-top: 30px;
-            margin-bottom: 30px; /* Legger til mellomrom under knappen */
+            margin-bottom: 30px;
         }
         .return-button:hover {
             background-color: #333;
             color: #f4f4f4;
         }
-
-
-
     </style>
 </head>
 <body>
@@ -116,37 +116,11 @@
         <div class="text-section">Kjerne Familien er Pri 1. </div>
         <img src="bilder/Familie_nar.HEIC" alt="Familiebilde">
     </div>
-
     <div class="parallax" id="lilleandholmen">Lille Andholmen</div>
     <div class="text-container">
         <div class="text-section">Vårt andre hjem. 4. Generasjon eier av Lille Andholmen. Liger sør for Mandal.</div>
         <img src="bilder/LilleAndholmen_nar.HEIC" alt="Lille Andholmen nærbilde">
     </div>
-
-    <div class="parallax" id="roundtable">Round Table</div>
-    <div class="text-container">
-        <div class="text-section">Aktivt medlem siden 2014. sittet i styret både lokalt og nasjonalt.</div>
-        <img src="bilder/Roundtable_nar.jpg" alt="Round Table nærbilde">
-    </div>
-
-    <div class="parallax" id="jakt">Jakt</div>
-    <div class="text-container">
-        <div class="text-section">Småviltjakta starter 10. September. Da er jeg ikke på jobb. Jakter både på fjell og sjø</div>
-        <img src="bilder/Jakt_nar.jpg" alt="Jakt nærbilde">
-    </div>
-
-    <div class="parallax" id="fjell">Friluftsliv</div>
-    <div class="text-container">
-        <div class="text-section">Sommer og vinter. Topptur på truger ved vindstille og skyfrie forhold, er noe jeg setter høyt</div>
-        <img src="bilder/Fjell_nar.HEIC" alt="Fjell nærbilde">
-    </div>
-
-    <div class="parallax" id="ironman">Trening og kosthold</div>
-    <div class="text-container">
-        <div class="text-section">I en Ironman-konkurranse er mantraet korte steg og langsiktige mål. Man må mestre de fire disiplinene: svømming, sykling, løping og ernæring.</div>
-        <img src="bilder/Ironman_nar.jpeg" alt="Ironman nærbilde">
-    </div>
-
     <a href="index.html" class="return-button">Tilbake til forsiden</a>
 </body>
 </html>
