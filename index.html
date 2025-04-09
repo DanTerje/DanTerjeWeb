@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-        <!-- Google tag (gtag.js) -->
+    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-H8X1CG7NLQ"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-    
       gtag('config', 'G-H8X1CG7NLQ');
     </script>
     <meta charset="UTF-8">
@@ -15,7 +14,7 @@
     <title>Dan Terje Norli</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
-        
+
         body {
             margin: 0;
             padding: 0;
@@ -27,6 +26,7 @@
             color: #111;
             text-align: center;
         }
+
         .container {
             max-width: 800px;
             margin: 0 auto;
@@ -35,6 +35,7 @@
             flex-direction: column;
             flex: 1;
         }
+
         .content {
             display: flex;
             flex-direction: column;
@@ -44,6 +45,7 @@
             margin-top: 300px;
             position: relative;
         }
+
         h1 {
             font-size: 4rem;
             font-weight: 700;
@@ -51,14 +53,19 @@
             white-space: nowrap;
             overflow: hidden;
             width: 0;
-            animation: typing 3s steps(14, end) forwards, blink 1s step-end 3, hideCursor 0s 3s forwards; /* Start etter blink, fjerner streken */   
-            margin-bottom: -20px; /* Avstand på desktop */
+            animation: 
+                typing 3s steps(14, end) forwards,
+                blink 1s step-end 3,
+                hideCursor 0s 3s forwards; /* Fjerner streken etter blinking */
+            margin-bottom: -20px;
         }
+
         .subtext {
             font-size: 1.5rem;
             opacity: 0;
             animation: fadeInText 2s ease-in forwards 3s;
         }
+
         .button-container {
             display: flex;
             flex-direction: row;
@@ -68,6 +75,7 @@
             opacity: 0;
             animation: fadeInButtons 2s ease-in forwards 3s;
         }
+
         .button-container button {
             font-size: 1.5rem;
             padding: 10px 20px;
@@ -80,6 +88,7 @@
             position: relative;
             transition: color 0.3s ease-in-out;
         }
+
         .button-container button::after {
             content: '';
             position: absolute;
@@ -92,13 +101,16 @@
             transform-origin: bottom right;
             transition: transform 0.3s ease-in-out;
         }
+
         .button-container button:hover::after {
             transform: scaleX(1);
             transform-origin: bottom left;
         }
+
         .button-container button:hover {
             color: #555;
         }
+
         .phoenix {
             width: 175px;
             height: 175px;
@@ -109,6 +121,7 @@
             opacity: 0;
             animation: fadeInImage 2s ease-in forwards 2s;
         }
+
         footer {
             text-align: center;
             padding: 10px;
@@ -129,7 +142,7 @@
             }
             h1 {
                 font-size: 2.5rem;
-                margin-bottom: -15px; /* Avstand på mobil */
+                margin-bottom: -15px;
             }
             .subtext {
                 font-size: 1rem;
@@ -145,21 +158,30 @@
             }
         }
 
+        /* Animasjoner */
         @keyframes typing {
             from { width: 0; }
             to { width: 14ch; }
         }
+
         @keyframes blink {
             50% { border-color: transparent; }
         }
+
+        @keyframes hideCursor {
+            to { border-right: none; }
+        }
+
         @keyframes fadeInText {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
         @keyframes fadeInButtons {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
         @keyframes fadeInImage {
             from { opacity: 0; }
             to { opacity: 1; }
