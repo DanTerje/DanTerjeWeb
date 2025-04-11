@@ -1,30 +1,21 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-        <!-- Google tag (gtag.js) -->
+    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-H8X1CG7NLQ"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-    
       gtag('config', 'G-H8X1CG7NLQ');
     </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Otium</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
-        h1 {
-            font-size: 3rem; 
-            padding: 50px 0;
-        }
-        .subtitle {
-            font-size: 1.5rem;
-            color: #555;
-            margin-top: -80px;
-            margin-bottom: 30px;
-        }
+
         body {
             margin: 0;
             padding: 0;
@@ -32,25 +23,40 @@
             font-family: 'Playfair Display', serif;
             color: #111;
             text-align: center;
+            overflow-x: hidden;
         }
+
+        h1 {
+            font-size: 3rem;
+            padding: 50px 0;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: #555;
+            margin-top: -80px;
+            margin-bottom: 30px;
+        }
+
         .parallax {
             position: relative;
-            height: 300px;
-            max-width: 1500px;
-            width: 100%;
-            margin: 0 auto;
+            height: 500px; /* Økt høyde for desktop for å vise mer av bildet */
             background-size: cover;
-            background-attachment: fixed;
             background-position: center;
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
+            background-repeat: no-repeat;
+        }
+
+        .parallax-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             color: white;
-            font-size: 2em;
+            font-size: 2.5em;
             font-weight: bold;
-            padding-top: 20px;
             text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
         }
+
         .text-container {
             display: flex;
             align-items: center;
@@ -62,23 +68,27 @@
             border-radius: 10px;
             padding: 20px;
         }
+
         .text-container img {
             width: 450px;
             height: auto;
             margin-left: 20px;
             border-radius: 10px;
         }
+
         .text-section {
             text-align: left;
             font-size: 1em;
             flex-grow: 1;
         }
+
         .separator {
             width: 80%;
             height: 1px;
             background-color: black;
             margin: 20px auto;
         }
+
         footer {
             text-align: center;
             padding: 10px;
@@ -86,30 +96,6 @@
             color: #666;
             background-color: #f4f4f4;
         }
-        
-        @media only screen and (max-width: 768px) {
-            .parallax {
-                background-attachment: scroll;
-                height: 175px;
-            }
-            .text-container {
-                flex-direction: column;
-                text-align: center;
-            }
-            .text-container img {
-                width: var(--mobile-img-width, 275px);
-                margin-left: 0;
-                margin-top: 10px;
-                margin-bottom: 75px;
-            }
-        }
-        
-        #familie { background-image: url('bilder/Familie1.jpg'); }
-        #jakt { background-image: url('bilder/Jakt1.HEIC'); }
-        #fjell { background-image: url('bilder/Fjell1.HEIC'); }
-        #roundtable { background-image: url('bilder/roundtable2.jpg'); }
-        #ironman { background-image: url('bilder/Ironman1.jpg'); }
-        #lilleandholmen { background-image: url('bilder/lilleandholmen1.HEIC'); }
 
         .return-button {
             display: inline-block;
@@ -125,9 +111,29 @@
             margin-top: 30px;
             margin-bottom: 30px;
         }
+
         .return-button:hover {
             background-color: #333;
             color: #f4f4f4;
+        }
+
+        @media only screen and (max-width: 768px) {
+            .text-container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .text-container img {
+                width: var(--mobile-img-width, 275px);
+                margin-left: 0;
+                margin-top: 10px;
+                margin-bottom: 75px;
+            }
+
+            .parallax {
+                height: 300px; /* Mindre høyde på mobil */
+                background-position-y: 0 !important; /* Statisk bakgrunn på mobil */
+            }
         }
     </style>
 </head>
@@ -135,52 +141,89 @@
     <h1>Otium</h1>
     <div class="subtitle">: tiden utenom arbeid og offisielle forpliktelser</div>
     <div class="separator"></div>
-    
-    <div class="parallax" id="familie">Kjerne Familien</div>
+
+    <div class="parallax" data-bg="bilder/Familie1.jpg">
+        <div class="parallax-content">Kjerne Familien</div>
+    </div>
     <div class="text-container">
         <div class="text-section">Familien Norli. Vi bor på en gård på Malmheim</div>
-        <img src="bilder/Familie_nar.HEIC" alt="Familiebilde">
+        <img src="bilder/Familie_nar.jpg" alt="Familiebilde">
     </div>
     <div class="separator"></div>
-    
-    <div class="parallax" id="lilleandholmen">Lille Andholmen</div>
+
+    <div class="parallax" data-bg="bilder/lilleandholmen1.jpg">
+        <div class="parallax-content">Lille Andholmen</div>
+    </div>
     <div class="text-container">
         <div class="text-section">Vårt andre hjem. De fleste ferier blir tilbrakt her. Ligger sør for Mandal.</div>
-        <img src="bilder/LilleAndholmen_nar.HEIC" alt="Lille Andholmen nærbilde">
+        <img src="bilder/LilleAndholmen_nar.jpg" alt="Lille Andholmen nærbilde">
     </div>
     <div class="separator"></div>
-    
-        <div class="parallax" id="roundtable">Round Table</div>
+
+    <div class="parallax" data-bg="bilder/roundtable2.jpg">
+        <div class="parallax-content">Round Table</div>
+    </div>
     <div class="text-container">
         <div class="text-section">Aktivt medlem siden 2014. Sittet i styret både lokalt og nasjonalt.</div>
         <img src="bilder/Roundtable_nar.jpg" alt="Round Table nærbilde">
     </div>
     <div class="separator"></div>
 
-    <div class="parallax" id="jakt">Jakt</div>
+    <div class="parallax" data-bg="bilder/Jakt1.jpg">
+        <div class="parallax-content">Jakt</div>
+    </div>
     <div class="text-container">
         <div class="text-section">Småviltjakta starter 10. September. Jakter både på fjell og sjø.</div>
         <img src="bilder/Jakt_nar.jpg" alt="Jakt nærbilde">
     </div>
     <div class="separator"></div>
 
-    <div class="parallax" id="fjell">Friluftsliv</div>
+    <div class="parallax" data-bg="bilder/Fjell1.jpg">
+        <div class="parallax-content">Friluftsliv</div>
+    </div>
     <div class="text-container">
         <div class="text-section">Jeg bruker tid på friluftsliv både sommer og vinter. Spesielt setter jeg pris på toppturer på truger i vindstille og skyfrie forhold, der naturen virkelig kommer til sin rett.</div>
-        <img src="bilder/Fjell_nar.HEIC" alt="Fjell nærbilde">
+        <img src="bilder/Fjell_nar.jpg" alt="Fjell nærbilde">
     </div>
     <div class="separator"></div>
 
-    <div class="parallax" id="ironman">Trening og kosthold</div>
+    <div class="parallax" data-bg="bilder/Ironman1.jpg">
+        <div class="parallax-content">Trening og kosthold</div>
+    </div>
     <div class="text-container">
         <div class="text-section">I en Ironman-konkurranse er mantraet korte steg og langsiktige mål. Man må mestre de fire disiplinene: svømming, sykling, løping og ernæring.</div>
         <img src="bilder/Ironman_nar.jpeg" alt="Ironman nærbilde">
     </div>
     <div class="separator"></div>
-    
+
     <a href="index.html" class="return-button">Tilbake til forsiden</a>
-    <footer>
-        © Dan Terje Norli 2025
-    </footer>
+    <footer>© Dan Terje Norli 2025</footer>
+
+    <script>
+        // Sett bakgrunnsbilde dynamisk fra data-bg
+        document.querySelectorAll('.parallax').forEach(parallax => {
+            const bg = parallax.getAttribute('data-bg');
+            parallax.style.backgroundImage = `url('${bg}')`;
+        });
+
+        // Parallax-effekt på desktop: bakgrunn ruller 5% av innholdets hastighet
+        window.addEventListener('scroll', () => {
+            // Sjekk om skjermen er større enn 768px (desktop)
+            if (window.innerWidth > 768) {
+                document.querySelectorAll('.parallax').forEach(parallax => {
+                    // Beregn hvor langt parallax-diven er fra toppen av vinduet
+                    const rect = parallax.getBoundingClientRect();
+                    const scrollTop = window.scrollY;
+                    const parallaxTop = rect.top + scrollTop;
+
+                    // Beregn offset: 5% av rulleavstanden (0.05 = 5%)
+                    const offset = (scrollTop - parallaxTop) * 0.45;
+
+                    // Oppdater background-position-y med startpunkt 50% for å vise mer av bildet
+                    parallax.style.backgroundPositionY = `calc(50% + ${offset}px)`;
+                });
+            }
+        });
+    </script>
 </body>
 </html>
