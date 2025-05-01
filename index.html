@@ -2,13 +2,12 @@
 <html lang="no">
 <head>
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K1HPZM38KW"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H8X1CG7NLQ"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-    
-      gtag('config', 'G-K1HPZM38KW');
+      gtag('config', 'G-H8X1CG7NLQ');
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -202,7 +201,16 @@
         </div>
     </div>
     <footer>
-         Dan Terje Norli © 2025
+        Dan Terje Norli © 2025
     </footer>
+    <!-- Google reCAPTCHA v3 -->
+    <script src="https://www.google.com/recaptcha/api.js?render=6LcpcCcrAAAAALtS1A1Kips9DxYW3-El3z-ZwdrH"></script>
+    <script>
+    grecaptcha.ready(function() {
+        grecaptcha.execute('6LcpcCcrAAAAALtS1A1Kips9DxYW3-El3z-ZwdrH', {action: 'homepage'}).then(function(token) {
+        console.log('reCAPTCHA Token (index.html):', token);
+        });
+    });
+    </script>    
 </body>
 </html>
