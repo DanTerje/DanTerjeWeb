@@ -1,21 +1,71 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-        <!-- Google tag (gtag.js) -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-K1HPZM38KW"></script>
-        <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-        
-          gtag('config', 'G-K1HPZM38KW');
-        </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Curriculum Vitae - Dan Terje Norli</title>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H8X1CG7NLQ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-H8X1CG7NLQ');
+    </script>
+
+    <!-- Beskyttelse mot kopiering -->
+    <script>
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        document.addEventListener('selectstart', event => event.preventDefault());
+        document.addEventListener('keydown', function(event) {
+            if (event.ctrlKey && (event.key === 'u' || event.key === 's' || event.key === 'p' || event.key === 'c' || event.key === 'x')) {
+                event.preventDefault();
+            }
+        });
+    </script>
+
+    <!-- Skjule innhold til godkjenning Block = pin er utkommnetert.  none = pin må legges inn før teskt vises -->
+    <style>
+        #protectedContent {
+            display: block;
+            
+             } /*
+        #protectedContent {  sa
+            display: none;
+        } */
+        #unlockScreen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: #f4f4f4;
+            font-family: 'Playfair Display', serif;
+        }
+        input[type="password"] {
+            padding: 10px;
+            font-size: 1rem;
+            margin: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #555;
+        }
+    </style>
+
+    <!-- Vanlige stiler -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
-        
+
         body {
             font-family: 'Playfair Display', serif;
             margin: 0;
@@ -33,7 +83,7 @@
         h1 {
             text-align: center;
             margin-bottom: 20px;
-        }           
+        }
         h2 {
             border-bottom: 2px solid #333;
             padding-bottom: 5px;
@@ -45,7 +95,7 @@
             text-align: center;
             margin-top: -30px;
             margin-bottom: 30px;
-        }    
+        }  
         .section {
             margin-bottom: 20px;
         }
@@ -53,15 +103,19 @@
             margin: 5px 0;
         }
         .highlighted-section {
-            background-color: #e6f2ff; /* Subtil lyseblå */
+            background-color: #f0f7eb;
             padding: 15px;
-            border-radius: 8px;
+            border-radius: 15px;
+            border: 0.1px solid #d4e0d1; /* Svært tynn og lys grønn-grå kant */
+        }
+        .highlighted-section1 {
+            background-color: #e6f2ff;
+            padding: 15px;
+            border-radius: 15px;
+            border: 0.1px solid #cfe4f5; 
         }
         .job, .education, .course, .position {
             margin-bottom: 15px;
-        }
-        .date {
-            /* Tom stil beholdt for konsistens */
         }
         .return-section {
             margin-top: 30px;
@@ -92,244 +146,287 @@
         }
     </style>
 </head>
+
 <body>
-    <div class="container">
-        <h1>Curriculum Vitae</h1>
-        <div class="subtitle">: livets løp</div>
-        <div class="separator"></div>
+<!--
+<div id="unlockScreen">
+    <h2>Vennligst tast PIN-kode for tilgang</h2>
+    <input type="password" id="pinInput" placeholder="Skriv inn PIN-kode">
+    <button onclick="unlockContent()">Lås opp</button>
+</div>
+-->
 
-        <!-- Personalia -->
-        <div class="section">
-            <h2>Personalia</h2>
-            <p><strong>Navn:</strong> Dan Terje Norli</p>
-            <p><strong>Kontakt:</strong> Kontakt meg via LinkedIn.</p>
-            <p><strong>LinkedIn (ikke oppdatert):</strong> <a href="https://www.linkedin.com/in/danterjenorli" target="_blank">Dan Terje Norli</a></p>
-        </div>
+<div id="protectedContent" class="container">
+    <!-- INNHOLDET DITT STARTER HER -->
+    
+    <h1>Curriculum Vitae</h1>
+    <div class="subtitle">: livsløp</div>
+    <div class="separator"></div>   
 
-        <!-- Nøkkelkvalifikasjoner -->
-        <div class="section highlighted-section">
-            <h2>Nøkkelkvalifikasjoner</h2>
-            <ul>
-                <li><p><strong>Bred og omfattende tertiær utdannelse:</strong> Solid fundament med fagbrev som Elektriker og Automatiker. Har til sammen 217,5 Studie-/Fagskole-poeng innen Elkraft, Automasjon, Prosjektledelse og Økonomi</p></li>
-                <li><p><strong>Prosjektledelse:</strong> Drevet med større multidisiplin prosjekter i flere land og kontinenter. Bachelor program i prosjektledelse fra BI</p></li>
-                <li><p><strong>Teknisk tegner:</strong> Jobbet med teknisk tegneprogram siden 2011 med hovedvekt innen disiplin elektro og instrumentering. Autocad, Solidworks,...</p></li>
-                <li><p><strong>Utviklingspråk og -teknologier:</strong> ST, C, Python, HTML, CSS, VBA, FBD,...</p></li>
-                <li><p><strong>Bred kjennskap til PLS systemer:</strong> Jeg har jobbet med flere av de mest anerkjente systemene som Siemens, B&R og Omron</p></li>
-                <li><p><strong>Tung erfaring innen automasjon og instrumentering:</strong> Har omfattende erfaring med boresystemer, kraner, overtrykkssystemer og SD-anlegg, både offshore, onshore, i marine miljøer og bygg.</p></li>
-                <li><p><strong>Bedriftsøkonomisk innsikt:</strong> Erfaring med økonomiansvar på avdelingsnivå, inkludert full økonomisk oppfølging av prosjekter - fra kalkulering av tilbud til håndtering av garantiperioden.</p></li>
-                <li><p><strong>Erfaring med en bred kundebase:</strong> Har jobbet med et variert spekter av kunder, inkludert operatørselskaper, boreselskaper, serviceselskaper, samt byggeiere innen offentlige, næring og hotell,</p></li>
-                <li><p><strong>Bred kulturforståelse:</strong> Har arbeidet på flere kontinenter og land, inkludert i Texas, Louisiana, Dubai, Singapore, Sør-Korea, Mauritius, Grand Canaria, Italia, Nederland, Storbritannia og Danmark.</p></li>
-                <li><p><strong>Rask læring og faglig utvikling:</strong> Jeg er genuint opptatt av å utvikle meg, bli dyktigere og tilegne meg ny kunnskap. Den siste tiden har jeg fokusert på å styrke min kompetanse innen kunstig intelligens (AI) i kombinasjon med Python</p></li>
-                <li><p><strong>Gjør ikke ting halvveis:</strong> Kolleger beskriver meg som en som leverer solid og pålitelig arbeid, alltid med fokus på kvalitet.</p></li>
-                <li><p><strong>Egenskaper:</strong> Jeg er utadvendt og trygg i mellommenneskelige relasjoner, og kjennetegnes som positiv, entusiastisk og kreativ. Jeg trives godt i team, men har enda sterkere evne til selvledelse.</p></li>
-            </ul>
-        </div>
+    <!-- Personalia -->
+    <div class="section">
+        <h2>Personalia</h2>
+        <p><strong>Navn:</strong> Dan Terje Norli</p>
+        <p><strong>Adresse:</strong> Sandnes</p>
+        <p><strong>Fødselsår:</strong> 1984</p>
+        <p><strong>Kommunikasjon:</strong> 
+            <a href="https://www.linkedin.com/in/danterjenorli/" target="_blank">
+                Send melding via LinkedIn
+            </a>
+        </p>
+        <p><strong>LinkedIn (ikke oppdatert):</strong> 
+            <a href="https://www.linkedin.com/in/danterjenorli/" target="_blank">
+                Dan Terje Norli
+            </a>
+        </p>
+        
+    </div>
+    
+    <!-- Profesjonell profil -->
+    <div class="section highlighted-section">
+        <h2>Profesjonell profil</h2>
+        <p>Allsidig elektro- og automasjonsingeniør med solid faglig fundament, bred internasjonal erfaring og sterke prosjektlederferdigheter. Har oppnådd 219,5 studie- og fagskolepoeng innen elkraft, automasjon, økonomi og prosjektledelse – fagbrev som elektriker og automatiker som fundament. Har levert tverrfaglige prosjekter globalt, kombinert teknisk dybdekunnskap med økonomisk innsikt og høy gjennomføringsevne. Kjent for kvalitet, selvledelse og kontinuerlig faglig utvikling – med særlig fokus på kunstig intelligens kombinert med programmering og MS-office.</p>
+    </div>
 
-        <!-- Utdanning -->
-        <div class="section">
-            <h2>Utdanning</h2>
-            <div class="education">
-                <p class="date">feb. 25 - d.d</p>
-                <p><strong>Innovasjon med store språkmodeller (AI/KI)(Deltid)</strong> - NTNU, Trondheim</p>
-                <p>Fordypning: Multimodale modeller</p>
-                <p>Forelesere: Postdoctoral Researcher Peng Liu, Postdoctoral Fellow Lemei Zhang og Director of NorwAI Professor Jon Atle Gulla</p>
-            </div>
-            <div class="education">
-                <p class="date">aug. 17 - jun. 18</p>
-                <p><strong>Fagtekniker Elkraft</strong> - Fagskolen Rogaland avdeling SOTS, Stavanger</p>
-                <p>Hovedprosjekt: Fungerende modell av Kibble balanse</p>
-                <p>Oppnådd karakter A i syv av ni emner</p>
-            </div>
-            <div class="education">
-                <p class="date">jan. 15 - jan. 18</p>
-                <p><strong>Fagtekniker Automatisering (Deltid)</strong> - Fagskolen Rogaland avdeling SOTS, Stavanger</p>
-                <p>Hovedprosjekt: Matematisk tilnærming av prosessautomasjon</p>
-                <p>Oppnådd karakter A i seks av ni emner</p>
-            </div>
-            <div class="education">
-                <p class="date">jan. 14 - jun. 14</p>
-                <p><strong>Grunnleggende bedriftsøkonomi (Deltid)</strong> - BI Handelshøyskolen, Stavanger</p>
-                <p>Oppnådde karakter A på avsluttende eksamen</p>
-            </div>
-            <div class="education">
-                <p class="date">aug. 12 - jun. 13</p>
-                <p><strong>Bachelor Program i prosjektledelse (Deltid)</strong> - BI Handelshøyskolen, Stavanger</p>
-                <p>Vår 2013: Bacheloroppgave - Prosjektledelse (Karakter B)</p>
-                <p>Høst 2012: Prosjektledelse eksamen (Karakter B)</p>
-            </div>
-            <div class="education">
-                <p class="date">nov. 06 - jul. 08</p>
-                <p><strong>Fagbrev Elektrikerfaget (Gr.L)</strong> - Yrkesopplæringsnemnda i Rogaland</p>
-                <p>Gjennomførte læretiden og fagprøven i Swire Oilfield Services AS</p>
-            </div>
-            <div class="education">
-                <p class="date">jun. 03 - mar. 05</p>
-                <p><strong>Fagbrev Automatikerfaget</strong> - Yrkesopplæringsnemnda, Rogaland</p>
-                <p>Gjennomførte læretiden og fagprøven i National Oilwell Varco AS</p>
-            </div>
-        </div>
 
-        <!-- Arbeidserfaring -->
-        <div class="section">
-            <h2>Arbeidserfaring</h2>
-            <div class="job">
-                <p class="date">Sep. 24 - d.d</p>
-                <p><strong>Automasjonsingeniør</strong> - NOR Elektro Automasjon AS, Sola</p>
-                <p>Støtter daglig leder og installatører med utvikling og forbedring av systemer for økt effektivitet, primært gjennom bruk av Python, Microsoft Office og andre MS-verktøy. Bidrar også med teknisk tegning for offshore- og onshore-utstyr ved behov.</p>
-            </div>
-            <div class="job">
-                <p class="date">jan. 22 - jun. 24</p>
-                <p><strong>Automasjonsingeniør</strong> - KE Automasjon AS, Klepp</p>
-                <p>Ønsket en periode med mindre ansvar og frasa meg derfor avdelingslederjobben. Hadde kommet så langt i livet at jeg unnet meg selv tid til refleksjon og selvutvikling. Tok tak i hele min livssituasjon, herunder trening og kosthold i samråd med en ekspert på helse. Jeg har lært ekstremt mye om meg selv og hvordan vi mennesker er skrudd sammen fysisk og mentalt. Jeg var tidligere på snaue 105kg, men er nå i relativ god form. Der jeg blant annet gjennomførte Ironman 70.3 Sandnes sommeren 2023 og sommeren 2024 ble Ironman 140.6 Kalmar gjennomført. Erfaringen dette ga meg omkring analyse, problemdefinisjon, å sette seg mål og delmål og jobbe jevnt og trutt mot dette, ser jeg har stor overføringsverdi til arbeidslivet.</p>
-            </div>
-            <div class="job">
-                <p class="date">jul. 18 - jan. 22</p>
-                <p><strong>Avdelingsleder, Drift og Service</strong> - KE Automasjon AS, Klepp</p>
-                <p>Avdelingen ivaretar kundene som har fått levert byggautomasjons anlegg. Dette innebærer i hovedsak: Ad-hoc oppdrag, webhotell for toppsystem, oppgradering/utvidelser, periodisk kontroll /service, drift og energioppfølging. Jeg hadde økonomi- og personalansvar for avdelingen i tillegg til å innhente oppdrag. Utvikling og videreutvikling av tjenester innen Energisparing. Avdelingen har hatt god vekst. Bunnlinjen er solid selv med økende aktivitet.</p>
-            </div>
-            <div class="job">
-                <p class="date">jun. 11 - mar. 17</p>
-                <p><strong>Prosjektingeniør, Surface System AMO</strong> - Baker Hughes Norway AS, Sola</p>
-                <p>Prosjektering, oppfølging, MC, idriftsettelse og dokumentering av overflateinstallasjon på bore-rigger/plattformer. Installasjonens hensikt var å kunne utføre mudlogging og retningsborings tjenester. Mesteparten av prosjektene foregikk på nybygg. Prosjektene var tverrfaglige, men med hovedvekt på elektro og instrumentering. Å sørge for at installasjonen er iht. teknisk krav (NORSOK, DNV, IEC). Prosjektene omfattet som oftest en spesiallaget overtrykkskontainer. Dette innebar å designe, spesifisere, bestilling, oppfølging og installasjon av kontaineren.</p>
-            </div>
-            <div class="job">
-                <p class="date">sep. 06 - mai. 11</p>
-                <p><strong>Servicetekniker, Automatiker Elektriker Gr.L</strong> - Swire Oilfield Services AS, Sola</p>
-                <p>Feilsøking, installasjon, idriftsettelse og nybygging av elektro/automasjons systemer som oftest var i Ex-utførelse og hadde integrert PLS. Systemene kunne være: overtrykkscontainere, kraner og annet spesialutstyr. Stor andel av oppgavene ble utført offshore og inshore. Læretiden og fagprøven for Elektriker ble gjennomført i denne perioden.</p>
-            </div>
-            <div class="job">
-                <p class="date">jun. 03 - sep. 06</p>
-                <p><strong>Automatiker</strong> - National Oilwell Varco AS, Stavanger</p>
-                <p>Bygging av borepakker herunder Cyberbase®, elektrotavler, Ex-kapslinger, borekabiner og krankabiner. Læretiden, fagprøven for Automatiker og førstegangstjenesten ble gjennomført i denne perioden.</p>
-            </div>
+    <!-- Nøkkelkvalifikasjoner -->
+    <div class="section highlighted-section1">
+        <h2>Nøkkelkvalifikasjoner</h2>
+        <ul>
+            <li><p><strong>Bred og omfattende tertiær utdannelse:</strong> Prosjektledelse og økonomi fra BI. Elkraft og Automasjon fra Fagskole. Fagbrev som Elektriker og Automatiker.</p></li>
+            <li><p><strong>Prosjektledelse:</strong> Drevet med større multidisiplin prosjekter i flere land og kontinenter. Bachelorprogram i prosjektledelse fra BI.</p></li>
+            <li><p><strong>Teknisk tegner:</strong> Erfaring med elektro og instrumentering siden 2011 i Autodesk og SolidWorks.</p></li>
+            <li><p><strong>Utviklingspråk og -teknologier:</strong> ST, C, Python, HTML, CSS, VBA,...</p></li>
+            <li><p><strong>Bred kjennskap til PLS/SCADA/HMI systemer:</strong> Erfaring med flere anerkjente systemer som Siemens, B&R, Iconics og Omron.</p></li>
+            <li><p><strong>Tung erfaring innen automasjon og instrumentering:</strong> Omfattende erfaring med blant annet boresystemer, kraner, overtrykkssystemer og SD-anlegg, både offshore, onshore, i marine miljøer og bygg.</p></li>
+            <li><p><strong>Bedriftsøkonomisk innsikt:</strong> Erfaring med økonomiansvar på avdelingsnivå, inkludert full økonomisk oppfølging av prosjekter – fra kalkulering av tilbud til håndtering av garantiperioden.</p></li>
+            <li><p><strong>Erfaring med en bred kundebase:</strong> Har jobbet med et variert spekter av kunder, inkludert operatørselskaper, boreselskaper, serviceselskaper, samt byggeiere innen offentlige, næring og hotell.</p></li>
+            <li><p><strong>Bred kulturforståelse:</strong> Har arbeidet på flere kontinenter og land, inkludert i Texas, Louisiana, Dubai, Singapore, Sør-Korea, Mauritius, Grand Canaria, Italia, Nederland, Storbritannia og Danmark.</p></li>
+        </ul>
+        
+        
+    </div>
+    
+    <!-- Utdanning -->
+    <div class="section">
+        <h2>Utdanning</h2>
+        <div class="education">
+            <p class="date">feb. 25 - d.d</p>
+            <p><strong>Innovasjon med store språkmodeller (AI/KI)(Deltid)</strong> - NTNU, Trondheim</p>
+            <p>Fordypning: Multimodale modeller</p>
+            <p>Forelesere: Postdoctoral Researcher Peng Liu, Postdoctoral Fellow Lemei Zhang og Director of NorwAI Professor Jon Atle Gulla</p>
         </div>
+        <div class="education">
+            <p class="date">aug. 17 - jun. 18</p>
+            <p><strong>Fagtekniker Elkraft</strong> - Fagskolen Rogaland avdeling SOTS, Stavanger</p>
+            <p>Hovedprosjekt: Fungerende modell av Kibble balanse</p>
+            <p>Oppnådd karakter A i syv av ni emner</p>
+        </div>
+        <div class="education">
+            <p class="date">jan. 15 - jan. 18</p>
+            <p><strong>Fagtekniker Automatisering (Deltid)</strong> - Fagskolen Rogaland avdeling SOTS, Stavanger</p>
+            <p>Hovedprosjekt: Matematisk tilnærming av prosessautomasjon</p>
+            <p>Oppnådd karakter A i seks av ni emner</p>
+        </div>
+        <div class="education">
+            <p class="date">jan. 14 - jun. 14</p>
+            <p><strong>Grunnleggende bedriftsøkonomi (Deltid)</strong> - BI Handelshøyskolen, Stavanger</p>
+            <p>Oppnådde karakter A på avsluttende eksamen</p>
+        </div>
+        <div class="education">
+            <p class="date">aug. 12 - jun. 13</p>
+            <p><strong>Bachelor Program i prosjektledelse (Deltid)</strong> - BI Handelshøyskolen, Stavanger</p>
+            <p>Vår 2013: Bacheloroppgave - Prosjektledelse (Karakter B)</p>
+            <p>Høst 2012: Prosjektledelse eksamen (Karakter B)</p>
+        </div>
+        <div class="education">
+            <p class="date">nov. 06 - jul. 08</p>
+            <p><strong>Fagbrev Elektrikerfaget (Gr.L)</strong> - Yrkesopplæringsnemnda i Rogaland</p>
+            <p>Gjennomførte læretiden og fagprøven i Swire Oilfield Services AS</p>
+        </div>
+        <div class="education">
+            <p class="date">jun. 03 - mar. 05</p>
+            <p><strong>Fagbrev Automatikerfaget</strong> - Yrkesopplæringsnemnda, Rogaland</p>
+            <p>Gjennomførte læretiden og fagprøven i National Oilwell Varco AS</p>
+        </div>
+    </div>
+    
+    <!-- Arbeidserfaring -->
+    <div class="section">
+        <h2>Arbeidserfaring</h2>
+        <div class="job">
+            <p class="date">Sep. 24 - d.d</p>
+            <p><strong>Automasjonsingeniør</strong> - NOR Elektro Automasjon AS, Sola</p>
+            <p>Støtter installatører og daglig leder med utvikling og forbedring av systemer for økt effektivitet. Produksjon av teknisk tegning og dokumnetajson for offshore- og onshore-utstyr.</p>
+        </div>
+        <div class="job">
+            <p class="date">jan. 22 - jun. 24</p>
+            <p><strong>Automasjonsingeniør</strong> - KE Automasjon AS, Klepp</p>
+            <p>Valgte å trappe ned lederansvar for en periode for å fokusere på faglig og personlig utvikling. Benyttet tiden til strukturert arbeid med livsstilsforbedring og målrettet fysisk trening, blant annet for å nå et personlig mål på «bucket list». Dette resulterte i gjennomføring av Ironman 70.3 Sandnes (2023) og Ironman 140.6 Kalmar (2024). Erfaringen har styrket mine evner innen målsetting, planlegging og systematisk gjennomføring – egenskaper som er direkte overførbare til krevende prosjekter i arbeidslivet.</p>
+        </div>
+        <div class="job">
+            <p class="date">jul. 18 - jan. 22</p>
+            <p><strong>Avdelingsleder, Drift og Service</strong> - KE Automasjon AS, Klepp</p>
+            <p>Avdelingen ivaretar kundene som har fått levert byggautomasjons anlegg. Dette innebærer i hovedsak: Ad-hoc oppdrag, webhotell for toppsystem, oppgradering/utvidelser, periodisk kontroll /service, drift og energioppfølging. Jeg hadde økonomi- og personalansvar for avdelingen i tillegg til å innhente oppdrag. Utvikling og videreutvikling av tjenester innen Energisparing. Avdelingen har hatt god vekst. Bunnlinjen er solid selv med økende aktivitet.</p>
+        </div>
+        <div class="job">
+            <p class="date">jun. 11 - mar. 17</p>
+            <p><strong>Prosjektingeniør, Surface System AMO</strong> - Baker Hughes Norway AS, Sola</p>
+            <p>Prosjektering, oppfølging, MC, idriftsettelse og dokumentering av overflateinstallasjon på bore-rigger/plattformer. Installasjonens hensikt var å kunne utføre mudlogging og retningsborings tjenester. Mesteparten av prosjektene foregikk på nybygg. Prosjektene var tverrfaglige, men med hovedvekt på elektro og instrumentering. Å sørge for at installasjonen er iht. teknisk krav (NORSOK, DNV, IEC). Prosjektene omfattet som oftest en spesiallaget overtrykkskontainer. Dette innebar å designe, spesifisere, bestilling, oppfølging og installasjon av kontaineren.</p>
+        </div>
+        <div class="job">
+            <p class="date">sep. 06 - mai. 11</p>
+            <p><strong>Servicetekniker, Automatiker Elektriker Gr.L</strong> - Swire Oilfield Services AS, Sola</p>
+            <p>Feilsøking, installasjon, idriftsettelse og nybygging av elektro/automasjons systemer som oftest var i Ex-utførelse og hadde integrert PLS. Systemene kunne være: overtrykkscontainere, kraner og annet spesialutstyr. Stor andel av oppgavene ble utført offshore og inshore. Læretiden og fagprøven for Elektriker ble gjennomført i denne perioden.</p>
+        </div>
+        <div class="job">
+            <p class="date">jun. 03 - sep. 06</p>
+            <p><strong>Automatiker</strong> - National Oilwell Varco AS, Stavanger</p>
+            <p>Bygging av borepakker herunder Cyberbase®, elektrotavler, Ex-kapslinger, borekabiner og krankabiner. Læretiden, fagprøven for Automatiker og førstegangstjenesten ble gjennomført i denne perioden.</p>
+        </div>
+    </div>
+    
+    <!-- Utvalgte Kurs -->
+    <div class="section">
+        <h2>Utvalgte Kurs</h2>
+        <div class="course">
+            <p class="date">apr. 25</p>
+            <p><strong>SOLIDWORKS 3D CAD Design - SOLIDWORKS Essentials</strong> - Jærtek, Bryne</p>
+        </div>
+            <div class="course">
+            <p class="date">mar. 25</p>
+            <p><strong>SOLIDWORKS Electrical - 2D Schematic</strong> - Jærtek, Bryne</p>
+        </div>
+        <div class="course">
+            <p class="date">jan. 25</p>
+            <p><strong>Elements of AI (2 ECTS)</strong> - University of Helsinki, Helsinki</p>
+        </div>
+        <div class="course">
+            <p class="date">okt. 24</p>
+            <p><strong>FSE og førstehjelp</strong> - KE Kurs og Kompetanse, Klepp</p>
+        </div>
+        <div class="course">
+            <p class="date">des. 16</p>
+            <p><strong>Ex oppdatering og repetisjon</strong> - ExTek, Sola</p>
+        </div>
+        <div class="course">
+            <p class="date">sep. 15</p>
+            <p><strong>Grunnleggende sikkerhetsopplæring repetisjon (OLF)</strong> - Falk Nutec, Stavanger</p>
+        </div>
+        <div class="course">
+            <p class="date">des. 14</p>
+            <p><strong>Nettkvalitet</strong> - Fluke Academy, Sola</p>
+        </div>
+        <div class="course">
+            <p class="date">des. 13</p>
+            <p><strong>Jording i elektriske installasjoner offshore</strong> - Trainor, Stavanger</p>
+        </div>
+        <div class="course">
+            <p class="date">des. 13</p>
+            <p><strong>Situational Leadership – Taking Charge</strong> - Baker Hughes, Sola</p>
+        </div>
+        <div class="course">
+            <p class="date">nov. 13</p>
+            <p><strong>Team Leader Program</strong> - Baker Hughes, Sola</p>
+        </div>
+        <div class="course">
+            <p class="date">okt. 13</p>
+            <p><strong>Ptil/IEC 61892-serien (Offshore)</strong> - Trainor, Stavanger</p>
+        </div>
+        <div class="course">
+            <p class="date">aug. 13</p>
+            <p><strong>Project Management Certificate Program: The Kerzner Approach® to Project Management Excellence</strong> - International Institute for Learning, Houston</p>
+        </div>
+        <div class="course">
+            <p class="date">apr. 13</p>
+            <p><strong>NORSOK Z-015</strong> - IKM Instrutek, Sola</p>
+        </div>
+        <div class="course">
+            <p class="date">feb. 13</p>
+            <p><strong>NORSOK Z-007</strong> - Trainor, Tønsberg</p>
+        </div>
+        <div class="course">
+            <p class="date">feb. 10</p>
+            <p><strong>Grunnkurs Nettanalyse</strong> - IKM Instrutek, Larvik</p>
+        </div>
+        <div class="course">
+            <p class="date">okt. 07</p>
+            <p><strong>Grunnleggende sikkerhets- og beredskapskurs (OLF)</strong> - Falk Nutec, Stavanger</p>
+        </div>
+        <div class="course">
+            <p class="date">mar. 03</p>
+            <p><strong>Ex- Exi grunnleggende 45 timer</strong> - SOTS, Stavanger</p>
+        </div>
+    </div>
+    
+    <!-- IT-kunnskaper -->
+    <div class="section">
+        <h2>IT-kunnskaper</h2>
+        <p>OK+. Jeg har laget denne nettsiden fra grunnen av.</p>
+    </div>
+    
+    <!-- Verv -->
+    <div class="section">
+        <h2>Verv og Organisasjonsarbeid</h2>
+        <div class="position">
+            <p class="date">Jul. 20 – Jun. 21</p>
+            <p><strong>Distriktsleder DF4</strong> - Round Table Norge, Norge</p>
+        </div>
+        <div class="position">
+            <p class="date">Jul. 19 – Jun. 20</p>
+            <p><strong>Vise Distriktsleder DF4</strong> - Round Table Norge, Norge</p>
+        </div>
+        <div class="position">
+            <p class="date">Jul. 19 – Jun. 20</p>
+            <p><strong>Formann RT08</strong> - Round Table Sandnes, Sandnes</p>
+        </div>
+        <div class="position">
+            <p class="date">Jul. 18 – Jun. 19</p>
+            <p><strong>Viseformann RT08</strong> - Round Table Sandnes, Sandnes</p>
+        </div>
+        <div class="position">
+            <p class="date">Jul. 16 – Jun. 18</p>
+            <p><strong>Sekretær</strong> - Round Table Sandnes, Sandnes</p>
+        </div>
+        <div class="position">
+            <p class="date">Mar. 15 – Mar. 21</p>
+            <p><strong>Sekretær</strong> - Julebygdtinget, Sandnes</p>
+        </div>
+    </div>
+    
+    <!-- Annet -->
+    <div class="section">
+        <h2>Annet</h2>
+        <div class="info">
+            <p><strong>Språk:</strong> God i norsk og engelsk, både skriftlig og muntlig</p>
+        </div>
+        <div class="info">
+            <p><strong>Sertifikat:</strong> AM, BE, C, S, T</p>
+        </div>
+        <div class="info">
+            <p><strong>Interesser:</strong> Familie, jakt, fiske, friluftsliv, hytteliv og Round Table</p>
+        </div>
+    </div>
+    
+    <!-- Referanser -->
+    <div class="section">
+        <h2>Referanser</h2>
+        <p>På forespørsel</p>
+    </div>
 
-        <!-- Utvalgte Kurs -->
-        <div class="section">
-            <h2>Utvalgte Kurs</h2>
-            <div class="course">
-                <p class="date">mar. 25</p>
-                <p><strong>SOLIDWORKS Electrical - 2D Schematic</strong> - Jærtek, Bryne</p>
-            </div>
-            <div class="course">
-                <p class="date">jan. 25</p>
-                <p><strong>Elements of AI (2 ECTS)</strong> - University of Helsinki, Helsinki</p>
-            </div>
-            <div class="course">
-                <p class="date">okt. 24</p>
-                <p><strong>FSE og førstehjelp</strong> - KE Kurs og Kompetanse, Klepp</p>
-            </div>
-            <div class="course">
-                <p class="date">des. 16</p>
-                <p><strong>Ex oppdatering og repetisjon</strong> - ExTek, Sola</p>
-            </div>
-            <div class="course">
-                <p class="date">sep. 15</p>
-                <p><strong>Grunnleggende sikkerhetsopplæring repetisjon (OLF)</strong> - Falk Nutec, Stavanger</p>
-            </div>
-            <div class="course">
-                <p class="date">des. 14</p>
-                <p><strong>Nettkvalitet</strong> - Fluke Academy, Sola</p>
-            </div>
-            <div class="course">
-                <p class="date">des. 13</p>
-                <p><strong>Jording i elektriske installasjoner offshore</strong> - Trainor, Stavanger</p>
-            </div>
-            <div class="course">
-                <p class="date">des. 13</p>
-                <p><strong>Situational Leadership – Taking Charge</strong> - Baker Hughes, Sola</p>
-            </div>
-            <div class="course">
-                <p class="date">nov. 13</p>
-                <p><strong>Team Leader Program</strong> - Baker Hughes, Sola</p>
-            </div>
-            <div class="course">
-                <p class="date">okt. 13</p>
-                <p><strong>Ptil/IEC 61892-serien (Offshore)</strong> - Trainor, Stavanger</p>
-            </div>
-            <div class="course">
-                <p class="date">aug. 13</p>
-                <p><strong>Project Management Certificate Program: The Kerzner Approach® to Project Management Excellence</strong> - International Institute for Learning, Houston</p>
-            </div>
-            <div class="course">
-                <p class="date">apr. 13</p>
-                <p><strong>NORSOK Z-015</strong> - IKM Instrutek, Sola</p>
-            </div>
-            <div class="course">
-                <p class="date">feb. 13</p>
-                <p><strong>NORSOK Z-007</strong> - Trainor, Tønsberg</p>
-            </div>
-            <div class="course">
-                <p class="date">feb. 10</p>
-                <p><strong>Grunnkurs Nettanalyse</strong> - IKM Instrutek, Larvik</p>
-            </div>
-            <div class="course">
-                <p class="date">okt. 07</p>
-                <p><strong>Grunnleggende sikkerhets- og beredskapskurs (OLF)</strong> - Falk Nutec, Stavanger</p>
-            </div>
-            <div class="course">
-                <p class="date">mar. 03</p>
-                <p><strong>Ex- Exi grunnleggende 45 timer</strong> - SOTS, Stavanger</p>
-            </div>
-        </div>
-
-        <!-- IT-kunnskaper -->
-        <div class="section">
-            <h2>IT-kunnskaper</h2>
-            <p>OK+. Jeg har laget denne nettsiden fra grunnen av.</p>
-        </div>
-
-        <!-- Verv -->
-        <div class="section">
-            <h2>Verv og Organisasjonsarbeid</h2>
-            <div class="position">
-                <p class="date">Jul. 20 – Jun. 21</p>
-                <p><strong>Distriktsleder DF4</strong> - Round Table Norge, Norge</p>
-            </div>
-            <div class="position">
-                <p class="date">Jul. 19 – Jun. 20</p>
-                <p><strong>Vise Distriktsleder DF4</strong> - Round Table Norge, Norge</p>
-            </div>
-            <div class="position">
-                <p class="date">Jul. 19 – Jun. 20</p>
-                <p><strong>Formann RT08</strong> - Round Table Sandnes, Sandnes</p>
-            </div>
-            <div class="position">
-                <p class="date">Jul. 18 – Jun. 19</p>
-                <p><strong>Viseformann RT08</strong> - Round Table Sandnes, Sandnes</p>
-            </div>
-            <div class="position">
-                <p class="date">Jul. 16 – Jun. 18</p>
-                <p><strong>Sekretær</strong> - Round Table Sandnes, Sandnes</p>
-            </div>
-            <div class="position">
-                <p class="date">Mar. 15 – Mar. 21</p>
-                <p><strong>Sekretær</strong> - Julebygdtinget, Sandnes</p>
-            </div>
-        </div>
-
-        <!-- Annet -->
-        <div class="section">
-            <h2>Annet</h2>
-            <div class="info">
-                <p><strong>Språk:</strong> God i norsk og engelsk, både skriftlig og muntlig</p>
-            </div>
-            <div class="info">
-                <p><strong>Eksempel på Software:</strong> Autocad, SolidWorks, Inventor, Python, Iconics, Simatic TIA, Omron CX-ONE, Visual Studio Code, Matlab, Febdok,…</p>
-            </div>
-            <div class="info">
-                <p><strong>Sertifikat:</strong> AM, BE, C, S, T</p>
-            </div>
-            <div class="info">
-                <p><strong>Interesser:</strong> Familie, jakt, fiske, friluftsliv, hytteliv og Round Table</p>
-            </div>
-        </div>
-
-        <!-- Referanser -->
-        <div class="section">
-            <h2>Referanser</h2>
-            <p>På forespørsel</p>
-        </div>
+<!--
+<script>
+    function unlockContent() {
+        const pin = document.getElementById('pinInput').value;
+        if (pin === "1234") { // Endre "1234" til ønsket PIN-kode
+            document.getElementById('unlockScreen').style.display = 'none';
+            document.getElementById('protectedContent').style.display = 'block';
+        } else {
+            alert('Feil PIN-kode. Prøv igjen.');
+        }
+    }
+</script>
+-->
 
         <!-- Tilbake-knapp -->
         <div class="return-section">
@@ -337,7 +434,16 @@
         </div>
     </div>
     <footer>
-        Dan Terje Norli © 2025
+        © Dan Terje Norli 2025
     </footer>
+    <!-- Google reCAPTCHA v3 -->
+<script src="https://www.google.com/recaptcha/api.js?render=6LcpcCcrAAAAALtS1A1Kips9DxYW3-El3z-ZwdrH"></script>
+<script>
+  grecaptcha.ready(function() {
+    grecaptcha.execute('6LcpcCcrAAAAALtS1A1Kips9DxYW3-El3z-ZwdrH', {action: 'cv'}).then(function(token) {
+      console.log('reCAPTCHA Token (cv.html):', token);
+    });
+  });
+</script>
 </body>
 </html>
