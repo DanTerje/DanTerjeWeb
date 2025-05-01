@@ -173,13 +173,12 @@
         }
         @media (max-width: 600px) {
             .section p.two-column {
-                flex-direction: column;
-                gap: 5px;
-                align-items: flex-start;
+                gap: 15px; /* Reduser avstand litt for å spare plass på mobil */
+                font-size: 1rem; /* Litt mindre tekststørrelse for bedre passform */
             }
             .section p.two-column strong {
-                width: auto;
-                text-align: left;
+                width: 100px; /* Reduser bredden på etikett-kolonnen for mobil */
+                text-align: right; /* Behold høyrejustering */
             }
         }
     </style>
