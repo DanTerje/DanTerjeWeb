@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Curriculum Vitae - Dan Terje Norli</title>
 
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-H8X1CG7NLQ"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -14,7 +13,6 @@
       gtag('config', 'G-H8X1CG7NLQ');
     </script>
 
-    <!-- Beskyttelse mot kopiering -->
     <script>
         document.addEventListener('contextmenu', event => event.preventDefault());
         document.addEventListener('selectstart', event => event.preventDefault());
@@ -25,7 +23,6 @@
         });
     </script>
 
-    <!-- Skjule innhold til godkjenning Block = pin er utkommnetert.  none = pin må legges inn før teskt vises -->
     <style>
         #protectedContent {
             display: block;
@@ -60,9 +57,40 @@
         button:hover {
             background-color: #555;
         }
+
+        /* Nye stiler for språkvelgeren */
+        .language-switcher {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+        }
+
+        .language-switcher a {
+            text-decoration: none;
+            color: #111;
+            font-weight: normal;
+            padding: 0 5px;
+        }
+
+        .language-switcher a:hover {
+            text-decoration: underline;
+        }
+
+        .language-switcher a.active-lang {
+            font-weight: bold;
+            color: #111;
+        }
+
+        @media (max-width: 600px) {
+            .language-switcher {
+                top: 10px;
+                right: 10px;
+            }
+        }
     </style>
 
-    <!-- Vanlige stiler -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
 
@@ -185,22 +213,15 @@
 </head>
 
 <body>
-<!--
-<div id="unlockScreen">
-    <h2>Vennligst tast PIN-kode for tilgang</h2>
-    <input type="password" id="pinInput" placeholder="Skriv inn PIN-kode">
-    <button onclick="unlockContent()">Lås opp</button>
-</div>
--->
+<div class="language-switcher">
+        <a href="cv.html" class="active-lang">NO</a> | <a href="cv-en.html">EN</a>
+    </div>
 
 <div id="protectedContent" class="container">
-    <!-- INNHOLDET DITT STARTER HER -->
-    
     <h1>Curriculum Vitae</h1>
     <div class="subtitle">: livsløp</div>
-    <div class="separator"></div>   
+    <div class="separator"></div>  
 
-    <!-- Personalia -->
     <div class="section">
         <h2>Personalia</h2>
         <p class="two-column"><strong>Navn:</strong> Dan Terje Norli</p>
@@ -210,7 +231,7 @@
             <a href="mailto:norlidanterje@outlook.com?subject=Henvendelse%20fra%20CV-side">
                 Send e-post
             </a>
-        </p>            
+        </p>          
         <p class="two-column"><strong>LinkedIn:</strong> 
             <a href="https://www.linkedin.com/in/danterjenorli/" target="_blank">
                 </i>Dan Terje Norli
@@ -219,14 +240,12 @@
     </div>
 
     
-    <!-- Profesjonell profil -->
     <div class="section highlighted-section">
         <h2>Profesjonell profil</h2>
         <p>Allsidig elektro- og automasjonsingeniør med solid faglig fundament, bred internasjonal erfaring og sterke prosjektlederferdigheter. Har oppnådd 219,5 studie- og fagskolepoeng innen elkraft, automasjon, økonomi og prosjektledelse – fagbrev som elektriker og automatiker som fundament. Har levert tverrfaglige prosjekter globalt, kombinert teknisk dybdekunnskap med økonomisk innsikt og høy gjennomføringsevne. Kjent for kvalitet, selvledelse og kontinuerlig faglig utvikling – med særlig fokus på kunstig intelligens kombinert med programmering og MS-office.</p>
     </div>
 
 
-    <!-- Nøkkelkvalifikasjoner -->
     <div class="section highlighted-section1">
         <h2>Nøkkelkvalifikasjoner</h2>
         <ul>
@@ -244,7 +263,6 @@
         
     </div>
     
-    <!-- Utdanning -->
     <div class="section">
         <h2>Utdanning</h2>
         <div class="education">
@@ -288,7 +306,6 @@
         </div>
     </div>
     
-    <!-- Arbeidserfaring -->
     <div class="section">
         <h2>Arbeidserfaring</h2>
         <div class="job">
@@ -323,7 +340,6 @@
         </div>
     </div>
     
-    <!-- Utvalgte Kurs -->
     <div class="section">
         <h2>Utvalgte Kurs</h2>
         <div class="course">
@@ -396,13 +412,11 @@
         </div>
     </div>
     
-    <!-- IT-kunnskaper -->
     <div class="section">
         <h2>IT-kunnskaper</h2>
         <p>OK+. Jeg har blant annet laget denne nettsiden fra grunnen av.</p>
     </div>
     
-    <!-- Verv -->
     <div class="section">
         <h2>Verv og Organisasjonsarbeid</h2>
         <div class="position">
@@ -431,7 +445,6 @@
         </div>
     </div>
     
-    <!-- Annet -->
     <div class="section">
         <h2>Annet</h2>
         <div class="info">
@@ -445,42 +458,25 @@
         </div>
     </div>
     
-    <!-- Referanser -->
     <div class="section">
         <h2>Referanser</h2>
         <p>Selvfølgelig</p>
     </div>
 
-<!--
-<script>
-    function unlockContent() {
-        const pin = document.getElementById('pinInput').value;
-        if (pin === "1234") { // Endre "1234" til ønsket PIN-kode
-            document.getElementById('unlockScreen').style.display = 'none';
-            document.getElementById('protectedContent').style.display = 'block';
-        } else {
-            alert('Feil PIN-kode. Prøv igjen.');
-        }
-    }
-</script>
--->
-
-        <!-- Tilbake-knapp -->
-        <div class="return-section">
+<div class="return-section">
             <a href="index.html" class="back-button">Til forsiden</a>
         </div>
     </div>
     <footer>
         © Dan Terje Norli 2025
     </footer>
-    <!-- Google reCAPTCHA v3 -->
-<script src="https://www.google.com/recaptcha/api.js?render=6LcpcCcrAAAAALtS1A1Kips9DxYW3-El3z-ZwdrH"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=6LcpcCcrAAAAALtS1A1Kips9DxYW3-El3z-ZwdrH"></script>
 <script>
-  grecaptcha.ready(function() {
-    grecaptcha.execute('6LcpcCcrAAAAALtS1A1Kips9DxYW3-El3z-ZwdrH', {action: 'cv'}).then(function(token) {
-      console.log('reCAPTCHA Token (cv.html):', token);
+    grecaptcha.ready(function() {
+      grecaptcha.execute('6LcpcCcrAAAAALtS1A1Kips9DxYW3-El3z-ZwdrH', {action: 'cv'}).then(function(token) {
+        console.log('reCAPTCHA Token (cv.html):', token);
+      });
     });
-  });
 </script>
 </body>
 </html>
