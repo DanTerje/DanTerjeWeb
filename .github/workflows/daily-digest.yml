@@ -1,0 +1,106 @@
+name: Daglig innloggingsdigest
+
+on:
+  schedule:
+    # Kjører kl 07:00 norsk tid (06:00 UTC) hver dag
+    - cron: '0 6 * * *'
+  workflow_dispatch: # Kan også kjøres manuelt
+
+jobs:
+  send-digest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hent gårsdagens innlogginger og send digest
+        env:
+          SUPABASE_URL: https://kzfkibiafbsznavnyioi.supabase.co
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          OWNER_EMAIL: norlidanterje@outlook.com
+        run: |
+          python3 << 'EOF'
+          import urllib.request
+          import json
+          import os
+          from datetime import datetime, timezone, timedelta
+
+          SUPABASE_URL = os.environ['SUPABASE_URL']
+          SERVICE_KEY = os.environ['SUPABASE_SERVICE_KEY']
+          RESEND_KEY = os.environ['RESEND_API_KEY']
+          OWNER_EMAIL = os.environ['OWNER_EMAIL']
+
+          # Gårsdagens tidsintervall
+          now = datetime.now(timezone.utc)
+          yesterday_start = (now - timedelta(days=1)).replace(hour=0, minute=0, second=0, microsecond=0)
+          yesterday_end = yesterday_start + timedelta(days=1)
+
+          # Hent innlogginger fra Supabase
+          url = f"{SUPABASE_URL}/rest/v1/access_log?accessed_at=gte.{yesterday_start.isoformat()}&accessed_at=lt.{yesterday_end.isoformat()}&order=accessed_at.asc"
+          req = urllib.request.Request(url, headers={
+              'apikey': SERVICE_KEY,
+              'Authorization': f'Bearer {SERVICE_KEY}',
+              'Content-Type': 'application/json'
+          })
+          with urllib.request.urlopen(req) as r:
+              logs = json.loads(r.read())
+
+          # Ping for å holde Supabase aktiv
+          ping_url = f"{SUPABASE_URL}/rest/v1/blocked_emails?limit=1"
+          ping_req = urllib.request.Request(ping_url, headers={
+              'apikey': SERVICE_KEY,
+              'Authorization': f'Bearer {SERVICE_KEY}'
+          })
+          urllib.request.urlopen(ping_req)
+
+          dato = yesterday_start.strftime('%d.%m.%Y')
+
+          if not logs:
+              subject = f"danterje.no – ingen besøk {dato}"
+              html_body = f"<p>Ingen innlogginger på danterje.no {dato}.</p>"
+          else:
+              subject = f"danterje.no – {len(logs)} besøk {dato}"
+              rader = ""
+              for log in logs:
+                  tid = datetime.fromisoformat(log['accessed_at'].replace('Z','+00:00'))
+                  tid_no = (tid + timedelta(hours=2)).strftime('%H:%M')
+                  rader += f"""
+                  <tr>
+                    <td style="padding:6px 12px; border-bottom:1px solid #eee;">{log['email']}</td>
+                    <td style="padding:6px 12px; border-bottom:1px solid #eee;">{log['page']}</td>
+                    <td style="padding:6px 12px; border-bottom:1px solid #eee;">{tid_no}</td>
+                  </tr>"""
+
+              html_body = f"""
+              <h2 style="font-family:serif;">danterje.no – besøk {dato}</h2>
+              <p>{len(logs)} innlogging(er)</p>
+              <table style="border-collapse:collapse; font-family:serif; width:100%; max-width:600px;">
+                <thead>
+                  <tr style="background:#f4f4f4;">
+                    <th style="padding:8px 12px; text-align:left;">E-post</th>
+                    <th style="padding:8px 12px; text-align:left;">Side</th>
+                    <th style="padding:8px 12px; text-align:left;">Tidspunkt</th>
+                  </tr>
+                </thead>
+                <tbody>{rader}</tbody>
+              </table>
+              <p style="color:#999; font-size:12px; margin-top:20px;">Sendt automatisk fra danterje.no</p>"""
+
+          # Send via Resend
+          email_data = json.dumps({
+              "from": "danterje.no <noreply@danterje.no>",
+              "to": [OWNER_EMAIL],
+              "subject": subject,
+              "html": html_body
+          }).encode()
+
+          resend_req = urllib.request.Request(
+              "https://api.resend.com/emails",
+              data=email_data,
+              headers={
+                  'Authorization': f'Bearer {RESEND_KEY}',
+                  'Content-Type': 'application/json'
+              },
+              method='POST'
+          )
+          with urllib.request.urlopen(resend_req) as r:
+              print(f"Digest sendt: {r.read()}")
+          EOF
