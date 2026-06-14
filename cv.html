@@ -13,6 +13,60 @@
       gtag('config', 'G-H8X1CG7NLQ');
     </script>
 
+    <!-- Auth gate styles -->
+    <style>
+        #auth-gate {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background-color: #f4f4f4;
+            z-index: 9999;
+            font-family: 'Playfair Display', serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+        }
+        #auth-gate h2 {
+            font-size: 2rem;
+            margin-bottom: 8px;
+            color: #111;
+        }
+        #auth-gate p {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 30px;
+        }
+        .gate-input {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            padding: 10px 16px;
+            border: 1px solid #999;
+            border-radius: 4px;
+            width: 280px;
+            background: #fff;
+            color: #111;
+            margin-bottom: 12px;
+            display: block;
+        }
+        .gate-btn {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            padding: 10px 30px;
+            border: 2px solid #333;
+            border-radius: 4px;
+            background: transparent;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .gate-btn:hover { background: #333; color: #f4f4f4; }
+        #gate-error { color: #c0392b; font-size: 0.9rem; margin-top: 10px; min-height: 20px; }
+        #gate-info { color: #555; font-size: 0.9rem; margin-top: 10px; min-height: 20px; }
+    </style>
+
     <style>
 
         /* Nye stiler for språkvelgeren */
@@ -172,6 +226,116 @@
 </head>
 
 <body>
+
+<!-- Auth Gate Overlay -->
+<div id="auth-gate">
+    <h2>Dan Terje Norli</h2>
+    <p>Skriv inn din e-postadresse for å få tilgang.</p>
+
+    <div id="step-email">
+        <input class="gate-input" type="email" id="gate-email" placeholder="din@epost.no" autocomplete="email">
+        <button class="gate-btn" onclick="sendOtp()">Send tilgangskode</button>
+    </div>
+
+    <div id="step-otp" style="display:none;">
+        <p style="margin-bottom:16px;">En 6-sifret kode er sendt til <strong id="gate-email-shown"></strong></p>
+        <input class="gate-input" type="text" id="gate-otp" placeholder="123456" maxlength="6" inputmode="numeric">
+        <button class="gate-btn" onclick="verifyOtp()">Bekreft kode</button>
+        <br><a href="#" onclick="resetGate()" style="font-size:0.85rem; color:#777; margin-top:10px; display:inline-block;">Bruk annen e-post</a>
+    </div>
+
+    <div id="gate-error"></div>
+    <div id="gate-info"></div>
+</div>
+
+<script>
+const SUPABASE_FN = 'https://kzfkibiafbsznavnyioi.supabase.co/functions/v1/request-otp';
+const PAGE_NAME = 'cv';
+const SESSION_KEY = 'dtn_access';
+
+function showContent() {
+    document.getElementById('auth-gate').style.display = 'none';
+}
+
+function showError(msg) {
+    document.getElementById('gate-error').textContent = msg;
+    document.getElementById('gate-info').textContent = '';
+}
+
+function showInfo(msg) {
+    document.getElementById('gate-info').textContent = msg;
+    document.getElementById('gate-error').textContent = '';
+}
+
+function resetGate() {
+    document.getElementById('step-email').style.display = 'block';
+    document.getElementById('step-otp').style.display = 'none';
+    document.getElementById('gate-email').value = '';
+    document.getElementById('gate-otp').value = '';
+    document.getElementById('gate-error').textContent = '';
+    document.getElementById('gate-info').textContent = '';
+}
+
+async function sendOtp() {
+    const email = document.getElementById('gate-email').value.trim();
+    if (!email || !email.includes('@')) { showError('Skriv inn en gyldig e-postadresse.'); return; }
+
+    showInfo('Sender kode...');
+    try {
+        const res = await fetch(SUPABASE_FN, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action: 'send', email })
+        });
+        const data = await res.json();
+        if (data.error === 'blocked') { showError('Denne e-postadressen har ikke tilgang.'); return; }
+        if (!data.success) { showError('Noe gikk galt. Prøv igjen.'); return; }
+
+        document.getElementById('gate-email-shown').textContent = email;
+        document.getElementById('step-email').style.display = 'none';
+        document.getElementById('step-otp').style.display = 'block';
+        showInfo('Sjekk innboksen din.');
+    } catch(e) { showError('Tilkoblingsfeil. Prøv igjen.'); }
+}
+
+async function verifyOtp() {
+    const email = document.getElementById('gate-email-shown').textContent;
+    const code = document.getElementById('gate-otp').value.trim();
+    if (code.length !== 6) { showError('Koden må være 6 siffer.'); return; }
+
+    showInfo('Verifiserer...');
+    try {
+        const res = await fetch(SUPABASE_FN, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'x-page': PAGE_NAME },
+            body: JSON.stringify({ action: 'verify', email, code })
+        });
+        const data = await res.json();
+        if (data.error === 'expired') { showError('Koden er utløpt. Gå tilbake og be om ny.'); return; }
+        if (data.error === 'invalid') { showError('Feil kode. Prøv igjen.'); return; }
+        if (!data.success) { showError('Noe gikk galt. Prøv igjen.'); return; }
+
+        sessionStorage.setItem(SESSION_KEY, data.token);
+        showContent();
+    } catch(e) { showError('Tilkoblingsfeil. Prøv igjen.'); }
+}
+
+// Sjekk om allerede innlogget denne sesjonen
+if (sessionStorage.getItem(SESSION_KEY)) {
+    showContent();
+} else {
+    document.getElementById('auth-gate').style.display = 'flex';
+}
+
+// Enter-tast støtte
+document.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+        if (document.getElementById('step-otp').style.display !== 'none') verifyOtp();
+        else sendOtp();
+    }
+});
+</script>
+
 <div class="language-switcher">
         <a href="cv.html" class="active-lang">NO</a> | <a href="cv-en.html">EN</a>
     </div>
@@ -274,9 +438,14 @@
     <div class="section">
         <h2>Arbeidserfaring</h2>
         <div class="job">
-            <p class="date">Sep. 24 - d.d</p>
+            <p class="date">Jan. 26 - d.d</p>
+            <p><strong>Senior Ingeniør</strong> - Origo Solutions AS, Stavanger</p>
+            <p>Prosjektering av elektro-, automasjons- og instrumenteringsanlegg på Alvheim FPSO, inkludert integrasjon mot prosesstyringssystemet (SAS), med dokumentasjon i henhold til Aker BPs systemer og krav. Utvikler også interne verktøy for prosjektoppfølging. Fungerer som AI-ambassadør i selskapet og deltar i arbeidsgruppen for Prosjekt Nova – et initiativ for implementering av AI-agenter basert på Anthropics teknologi for effektivisering av arbeidsflyt og ingeniørprosesser. </p>
+        </div>
+        <div class="job">
+            <p class="date">Sep. 24 - Des. 25.d</p>
             <p><strong>Automasjonsingeniør</strong> - NOR Elektro Automasjon AS, Stavanger</p>
-            <p>Prosjektering og engineering av elektriske anlegg med høy grad av Ex-utførelse, inkludert PLS, frekvensomformere, instrumentering og pådragsorganer. Leveransene omfatter blant annet Z-015-enheter iht. NORSOK-standarder, tavler og Exde/Exp-kapslinger. Engineering-scope inkluderer løsningsvalg, teknisk tegning samt programmering av Simatic PLC og HMI. Har i tillegg arbeidet med prosjektering og teknisk støtte for modifikasjonsprosjekter på faste offshore olje- og gassinstallasjoner. Bistått installatør ved behov.</p>
+            <p>Prosjektering og engineering av elektriske anlegg med høy grad av Ex-utførelse, inkludert PLS, frekvensomformere, instrumentering og pådragsorganer. Leveransene omfatter blant annet Z-015-enheter iht. NORSOK-standarder, tavler og Exde/Exp-kapslinger. Engineering-scope inkluderer løsningsvalg, teknisk tegning samt programmering av Simatic PLC og HMI. Har i tillegg arbeidet med prosjektering og teknisk støtte for modifikasjonsprosjekter på faste offshore olje- og gassinstallasjoner. Bistått installatør ved behov. </p>
         </div>
         <div class="job">
             <p class="date">jan. 22 - jun. 24</p>
