@@ -27,52 +27,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Otium</title>
 
-    <!-- Auth gate styles -->
-    <style>
-        #auth-gate {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background-color: #f4f4f4;
-            z-index: 9999;
-            font-family: 'Playfair Display', serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 20px;
-        }
-        #auth-gate h2 { font-size: 2rem; margin-bottom: 8px; color: #111; }
-        #auth-gate p { font-size: 1rem; color: #555; margin-bottom: 30px; }
-        .gate-input {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.1rem;
-            padding: 10px 16px;
-            border: 1px solid #999;
-            border-radius: 4px;
-            width: 280px;
-            background: #fff;
-            color: #111;
-            margin-bottom: 12px;
-            display: block;
-        }
-        .gate-btn {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.1rem;
-            padding: 10px 30px;
-            border: 2px solid #333;
-            border-radius: 4px;
-            background: transparent;
-            color: #333;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .gate-btn:hover { background: #333; color: #f4f4f4; }
-        #gate-error { color: #c0392b; font-size: 0.9rem; margin-top: 10px; min-height: 20px; }
-        #gate-info { color: #555; font-size: 0.9rem; margin-top: 10px; min-height: 20px; }
-    </style>
-
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
 
@@ -199,98 +153,6 @@
 </head>
 <body>
 
-<!-- Auth Gate Overlay -->
-<div id="auth-gate">
-    <h2>Dan Terje Norli</h2>
-    <p>Skriv inn din e-postadresse for å få tilgang.</p>
-
-    <div id="step-email">
-        <input class="gate-input" type="email" id="gate-email" placeholder="din@epost.no" autocomplete="email">
-        <button class="gate-btn" onclick="sendOtp()">Send tilgangskode</button>
-    </div>
-
-    <div id="step-otp" style="display:none;">
-        <p style="margin-bottom:16px;">En 6-sifret kode er sendt til <strong id="gate-email-shown"></strong></p>
-        <input class="gate-input" type="text" id="gate-otp" placeholder="123456" maxlength="6" inputmode="numeric">
-        <button class="gate-btn" onclick="verifyOtp()">Bekreft kode</button>
-        <br><a href="#" onclick="resetGate()" style="font-size:0.85rem; color:#777; margin-top:10px; display:inline-block;">Bruk annen e-post</a>
-    </div>
-
-    <div id="gate-error"></div>
-    <div id="gate-info"></div>
-</div>
-
-<script>
-const SUPABASE_FN = 'https://kzfkibiafbsznavnyioi.supabase.co/functions/v1/request-otp';
-const PAGE_NAME = 'otium';
-const SESSION_KEY = 'dtn_access';
-
-function showContent() { document.getElementById('auth-gate').style.display = 'none'; }
-function showError(msg) { document.getElementById('gate-error').textContent = msg; document.getElementById('gate-info').textContent = ''; }
-function showInfo(msg) { document.getElementById('gate-info').textContent = msg; document.getElementById('gate-error').textContent = ''; }
-
-function resetGate() {
-    document.getElementById('step-email').style.display = 'block';
-    document.getElementById('step-otp').style.display = 'none';
-    document.getElementById('gate-email').value = '';
-    document.getElementById('gate-otp').value = '';
-    document.getElementById('gate-error').textContent = '';
-}
-
-async function sendOtp() {
-    const email = document.getElementById('gate-email').value.trim();
-    if (!email || !email.includes('@')) { showError('Skriv inn en gyldig e-postadresse.'); return; }
-    showInfo('Sender kode...');
-    try {
-        const res = await fetch(SUPABASE_FN, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ action: 'send', email })
-        });
-        const data = await res.json();
-        if (data.error === 'blocked') { showError('Denne e-postadressen har ikke tilgang.'); return; }
-        if (!data.success) { showError('Noe gikk galt. Prøv igjen.'); return; }
-        document.getElementById('gate-email-shown').textContent = email;
-        document.getElementById('step-email').style.display = 'none';
-        document.getElementById('step-otp').style.display = 'block';
-        showInfo('Sjekk innboksen din.');
-    } catch(e) { showError('Tilkoblingsfeil. Prøv igjen.'); }
-}
-
-async function verifyOtp() {
-    const email = document.getElementById('gate-email-shown').textContent;
-    const code = document.getElementById('gate-otp').value.trim();
-    if (code.length !== 6) { showError('Koden må være 6 siffer.'); return; }
-    showInfo('Verifiserer...');
-    try {
-        const res = await fetch(SUPABASE_FN, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'x-page': PAGE_NAME },
-            body: JSON.stringify({ action: 'verify', email, code })
-        });
-        const data = await res.json();
-        if (data.error === 'expired') { showError('Koden er utløpt. Gå tilbake og be om ny.'); return; }
-        if (data.error === 'invalid') { showError('Feil kode. Prøv igjen.'); return; }
-        if (!data.success) { showError('Noe gikk galt. Prøv igjen.'); return; }
-        sessionStorage.setItem(SESSION_KEY, data.token);
-        showContent();
-    } catch(e) { showError('Tilkoblingsfeil. Prøv igjen.'); }
-}
-
-if (sessionStorage.getItem(SESSION_KEY)) {
-    showContent();
-} else {
-    document.getElementById('auth-gate').style.display = 'flex';
-}
-
-document.addEventListener('keydown', e => {
-    if (e.key === 'Enter') {
-        if (document.getElementById('step-otp').style.display !== 'none') verifyOtp();
-        else sendOtp();
-    }
-});
-</script>
-
     <h1>Otium</h1>
     <div class="subtitle">: tiden utenom arbeid og offisielle forpliktelser</div>
     <div class="separator"></div>
@@ -301,7 +163,7 @@ document.addEventListener('keydown', e => {
     </div>
     <div class="text-container">
         <div class="text-section">Jeg er lidenskapelig opptatt av å tilegne meg ny kunnskap, også utenom arbeidstid. Dette kommer til uttrykk gjennom alt fra formelle studier, som emner innen kunstig intelligens ved NTNU, til selvstyrt læring via nettkurs og sertifiseringer innen teknologi, ledelse og økonomi.
-    
+
             Jeg bruker også tid på å følge med på det nyeste innen fagfeltet via bransjenettsteder, YouTube-kanaler og podkaster. Denne kontinuerlige faglige nysgjerrigheten bidrar til at jeg holder meg oppdatert og utvikler meg i takt med teknologien og arbeidslivets krav – og ikke minst, det gir meg stor glede.</div>
         <img src="bilder/Læring_nar.jpg" alt="Livslang læring nærbilde">
     </div>
@@ -314,12 +176,12 @@ document.addEventListener('keydown', e => {
         <div class="text-section">Vårt andre hjem. En del av fritiden tilbringes ved kysten sør for Mandal, i rolige omgivelser som gir rom for restitusjon og balanse. Området gir gode muligheter for friluftsliv og naturopplevelser, og fungerer som en viktig motvekt til en ellers strukturert og målrettet hverdag.
 
             Tiden benyttes ofte til praktiske og jordnære aktiviteter som fiske, båtliv og vedlikehold knyttet til det enkle hyttelivet. Dette gir anledning til både fysisk aktivitet og mental tilstedeværelse, noe som oppleves som verdifullt i et liv preget av ansvar og tempo.
-            
+
             Oppholdet ved sjøen gir dermed et naturlig pusterom og bidrar til økt overskudd, fokus og refleksjon – kvaliteter som også kommer til nytte i profesjonelle sammenhenger</div>
         <img src="bilder/LilleAndholmen_nar.jpg" alt="Lille Andholmen nærbilde">
     </div>
     <div class="separator"></div>
-        
+
 
     <div class="parallax" data-bg="bilder/roundtable2.jpg">
         <div class="parallax-content">Round Table</div>
@@ -328,7 +190,7 @@ document.addEventListener('keydown', e => {
         <div class="text-section">Siden 2014 har jeg vært et aktivt medlem av Round Table Norge – en organisasjon for samfunnsengasjerte unge menn med fokus på vennskap, nettverksbygging og samfunnsansvar.
 
             Gjennom årene har jeg hatt gleden av å bidra både lokalt, nasjonalt og internasjonalt. Jeg har hatt flere styreverv, blant annet som en del av det lokale styret og senere også i nasjonal sammenheng. Dette engasjementet har gitt verdifull erfaring innen ledelse, organisasjonsutvikling og tverrkulturelt samarbeid.
-            
+
             Deltakelsen i Round Table har styrket mine evner til å jobbe målrettet i team, bygge relasjoner på tvers av bakgrunner og bidra til positive samfunnsinitiativ – erfaringer jeg tar med meg inn i det profesjonelle livet.</div>
         <img src="bilder/Roundtable_nar.jpg" alt="Round Table nærbilde">
     </div>
@@ -341,7 +203,7 @@ document.addEventListener('keydown', e => {
         <div class="text-section">Jakt er en viktig del av fritidsaktivitetene mine, og noe jeg har hatt glede av gjennom flere år. Jeg deltar hovedsakelig i småviltjakt, både i fjellet og i kystnære områder, med jaktsesongen som starter 10. september som et fast høydepunkt.
 
             Jakt gir ikke bare naturopplevelser, men også trening i tålmodighet, konsentrasjon og respekt for naturens balanse. Det krever planlegging, trygg våpenhåndtering og god dømmekraft – ferdigheter som er overførbare til mange profesjonelle sammenhenger.
-            
+
             For meg handler jakt om å være til stede i naturen, ivareta tradisjoner og bidra til bærekraftig forvaltning av viltressurser.</div>
         <img src="bilder/Jakt_nar.jpg" alt="Jakt nærbilde">
     </div>
@@ -365,7 +227,7 @@ document.addEventListener('keydown', e => {
         <div class="text-section">Fysisk aktivitet og bevisst forhold til ernæring er en integrert del av hverdagen min. Jeg kombinerer utholdenhetstrening, som sykling og jogging, med styrketrening for å styrke kropp og sjel.
 
             Dette engasjementet har blant annet ført til deltakelse i to Ironman-konkurranser – en krevende utfordring som setter både kroppen og hodet på prøve. Ironman handler ikke bare om å mestre de tre fysiske disiplinene – svømming, sykling og løping – men også om den fjerde og ofte undervurderte: ernæring. Et bevisst og strukturert forhold til kosthold er avgjørende for å gjennomføre løpet på en trygg og effektiv måte.
-            
+
             Gjennom treningen og forberedelsene har jeg utviklet evner som målrettethet, selvdisiplin, langsiktig planlegging og evnen til å håndtere uforutsette utfordringer – ferdigheter som også har stor overføringsverdi til arbeidslivet.</div>
         <img src="bilder/Ironman_nar.jpeg" alt="Ironman nærbilde">
     </div>
@@ -386,15 +248,10 @@ document.addEventListener('keydown', e => {
             // Sjekk om skjermen er større enn 768px (desktop)
             if (window.innerWidth > 768) {
                 document.querySelectorAll('.parallax').forEach(parallax => {
-                    // Beregn hvor langt parallax-diven er fra toppen av vinduet
                     const rect = parallax.getBoundingClientRect();
                     const scrollTop = window.scrollY;
                     const parallaxTop = rect.top + scrollTop;
-
-                    // Beregn offset: 5% av rulleavstanden (0.05 = 5%)
                     const offset = (scrollTop - parallaxTop) * 0.45;
-
-                    // Oppdater background-position-y med startpunkt 50% for å vise mer av bildet
                     parallax.style.backgroundPositionY = `calc(50% + ${offset}px)`;
                 });
             }
