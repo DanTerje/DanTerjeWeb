@@ -13,6 +13,60 @@
       gtag('config', 'G-H8X1CG7NLQ');
     </script>
 
+    <!-- Auth gate styles -->
+    <style>
+        #auth-gate {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background-color: #f4f4f4;
+            z-index: 9999;
+            font-family: 'Playfair Display', serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+        }
+        #auth-gate h2 {
+            font-size: 2rem;
+            margin-bottom: 8px;
+            color: #111;
+        }
+        #auth-gate p {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 30px;
+        }
+        .gate-input {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            padding: 10px 16px;
+            border: 1px solid #999;
+            border-radius: 4px;
+            width: 280px;
+            background: #fff;
+            color: #111;
+            margin-bottom: 12px;
+            display: block;
+        }
+        .gate-btn {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            padding: 10px 30px;
+            border: 2px solid #333;
+            border-radius: 4px;
+            background: transparent;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .gate-btn:hover { background: #333; color: #f4f4f4; }
+        #gate-error { color: #c0392b; font-size: 0.9rem; margin-top: 10px; min-height: 20px; }
+        #gate-info { color: #555; font-size: 0.9rem; margin-top: 10px; min-height: 20px; }
+    </style>
+
     <style>
 
         /* Nye stiler for språkvelgeren */
@@ -173,6 +227,115 @@
 
 <body>
 
+<!-- Auth Gate Overlay -->
+<div id="auth-gate">
+    <h2>Dan Terje Norli</h2>
+    <p>Skriv inn din e-postadresse for å få tilgang.</p>
+
+    <div id="step-email">
+        <input class="gate-input" type="email" id="gate-email" placeholder="din@epost.no" autocomplete="email">
+        <button class="gate-btn" onclick="sendOtp()">Send tilgangskode</button>
+    </div>
+
+    <div id="step-otp" style="display:none;">
+        <p style="margin-bottom:16px;">En 6-sifret kode er sendt til <strong id="gate-email-shown"></strong></p>
+        <input class="gate-input" type="text" id="gate-otp" placeholder="123456" maxlength="6" inputmode="numeric">
+        <button class="gate-btn" onclick="verifyOtp()">Bekreft kode</button>
+        <br><a href="#" onclick="resetGate()" style="font-size:0.85rem; color:#777; margin-top:10px; display:inline-block;">Bruk annen e-post</a>
+    </div>
+
+    <div id="gate-error"></div>
+    <div id="gate-info"></div>
+</div>
+
+<script>
+const SUPABASE_FN = 'https://kzfkibiafbsznavnyioi.supabase.co/functions/v1/request-otp';
+const PAGE_NAME = 'cv';
+const SESSION_KEY = 'dtn_access';
+
+function showContent() {
+    document.getElementById('auth-gate').style.display = 'none';
+}
+
+function showError(msg) {
+    document.getElementById('gate-error').textContent = msg;
+    document.getElementById('gate-info').textContent = '';
+}
+
+function showInfo(msg) {
+    document.getElementById('gate-info').textContent = msg;
+    document.getElementById('gate-error').textContent = '';
+}
+
+function resetGate() {
+    document.getElementById('step-email').style.display = 'block';
+    document.getElementById('step-otp').style.display = 'none';
+    document.getElementById('gate-email').value = '';
+    document.getElementById('gate-otp').value = '';
+    document.getElementById('gate-error').textContent = '';
+    document.getElementById('gate-info').textContent = '';
+}
+
+async function sendOtp() {
+    const email = document.getElementById('gate-email').value.trim();
+    if (!email || !email.includes('@')) { showError('Skriv inn en gyldig e-postadresse.'); return; }
+
+    showInfo('Sender kode...');
+    try {
+        const res = await fetch(SUPABASE_FN, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action: 'send', email })
+        });
+        const data = await res.json();
+        if (data.error === 'blocked') { showError('Denne e-postadressen har ikke tilgang.'); return; }
+        if (!data.success) { showError('Noe gikk galt. Prøv igjen.'); return; }
+
+        document.getElementById('gate-email-shown').textContent = email;
+        document.getElementById('step-email').style.display = 'none';
+        document.getElementById('step-otp').style.display = 'block';
+        showInfo('Sjekk innboksen din.');
+    } catch(e) { showError('Tilkoblingsfeil. Prøv igjen.'); }
+}
+
+async function verifyOtp() {
+    const email = document.getElementById('gate-email-shown').textContent;
+    const code = document.getElementById('gate-otp').value.trim();
+    if (code.length !== 6) { showError('Koden må være 6 siffer.'); return; }
+
+    showInfo('Verifiserer...');
+    try {
+        const res = await fetch(SUPABASE_FN, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'x-page': PAGE_NAME },
+            body: JSON.stringify({ action: 'verify', email, code })
+        });
+        const data = await res.json();
+        if (data.error === 'expired') { showError('Koden er utløpt. Gå tilbake og be om ny.'); return; }
+        if (data.error === 'invalid') { showError('Feil kode. Prøv igjen.'); return; }
+        if (!data.success) { showError('Noe gikk galt. Prøv igjen.'); return; }
+
+        sessionStorage.setItem(SESSION_KEY, data.token);
+        showContent();
+    } catch(e) { showError('Tilkoblingsfeil. Prøv igjen.'); }
+}
+
+// Sjekk om allerede innlogget denne sesjonen
+if (sessionStorage.getItem(SESSION_KEY)) {
+    showContent();
+} else {
+    document.getElementById('auth-gate').style.display = 'flex';
+}
+
+// Enter-tast støtte
+document.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+        if (document.getElementById('step-otp').style.display !== 'none') verifyOtp();
+        else sendOtp();
+    }
+});
+</script>
+
 <div class="language-switcher">
         <a href="cv.html" class="active-lang">NO</a> | <a href="cv-en.html">EN</a>
     </div>
@@ -194,7 +357,7 @@
         </p>
         <p class="two-column"><strong>LinkedIn:</strong>
             <a href="https://www.linkedin.com/in/danterjenorli/" target="_blank">
-                </i>Dan Terje Norli
+                Dan Terje Norli
             </a>
         </p>
     </div>
@@ -212,12 +375,12 @@
             <li><p><strong>Bred og omfattende tertiær utdannelse:</strong> Prosjektledelse og økonomi fra BI. Elkraft og Automasjon fra Fagskole. Fagbrev som Elektriker og Automatiker.</p></li>
             <li><p><strong>Prosjektledelse:</strong> Drevet med større multidisiplin prosjekter i flere land og kontinenter. Bachelorprogram i prosjektledelse fra BI.</p></li>
             <li><p><strong>Teknisk tegner:</strong> Erfaring med elektro og instrumentering siden 2011 i Autodesk og SolidWorks.</p></li>
-            <li><p><strong>Utviklingspråk og -teknologier:</strong> ST, C, Python, HTML, CSS, VBA,...</p></li>
+            <li><p><strong>Utviklingsspråk og -teknologier:</strong> ST, C, Python, HTML, CSS, VBA,...</p></li>
             <li><p><strong>Bred kjennskap til PLS/SCADA/HMI systemer:</strong> Erfaring med flere anerkjente systemer som Siemens, B&R, Iconics og Omron.</p></li>
             <li><p><strong>Tung erfaring innen automasjon og instrumentering:</strong> Omfattende erfaring med blant annet boresystemer, kraner, overtrykkssystemer og SD-anlegg, både offshore, onshore, i marine miljøer og bygg.</p></li>
             <li><p><strong>Bedriftsøkonomisk innsikt:</strong> Erfaring med økonomiansvar på avdelingsnivå, inkludert full økonomisk oppfølging av prosjekter – fra kalkulering av tilbud til håndtering av garantiperioden.</p></li>
             <li><p><strong>Erfaring med en bred kundebase:</strong> Har jobbet med et variert spekter av kunder, inkludert operatørselskaper, boreselskaper, serviceselskaper, samt byggeiere innen offentlige, næring og hotell.</p></li>
-            <li><p><strong>Bred kulturforståelse:</strong> Har arbeidet på flere kontinenter og land, inkludert i Texas, Louisiana, Dubai, Singapore, Sør-Korea, Mauritius, Grand Canaria, Italia, Nederland, Storbritannia og Danmark.</p></li>
+            <li><p><strong>Bred kulturforståelse:</strong> Har arbeidet på flere kontinenter og land, inkludert i Texas, Louisiana, Dubai, Singapore, Sør-Korea, Mauritius, Gran Canaria, Italia, Nederland, Storbritannia og Danmark.</p></li>
         </ul>
 
 
@@ -275,12 +438,12 @@
     <div class="section">
         <h2>Arbeidserfaring</h2>
         <div class="job">
-            <p class="date">Jan. 26 - d.d</p>
+            <p class="date">jan. 26 - d.d.</p>
             <p><strong>Senior Ingeniør</strong> - Origo Solutions AS, Stavanger</p>
             <p>Prosjektering av elektro-, automasjons- og instrumenteringsanlegg på Alvheim FPSO, inkludert integrasjon mot prosesstyringssystemet (SAS), med dokumentasjon i henhold til Aker BPs systemer og krav. Utvikler også interne verktøy for prosjektoppfølging. Fungerer som AI-ambassadør i selskapet og deltar i arbeidsgruppen for Prosjekt Nova – et initiativ for implementering av AI-agenter basert på Anthropics teknologi for effektivisering av arbeidsflyt og ingeniørprosesser. </p>
         </div>
         <div class="job">
-            <p class="date">Sep. 24 - Des. 25.d</p>
+            <p class="date">sep. 24 - des. 25</p>
             <p><strong>Automasjonsingeniør</strong> - NOR Elektro Automasjon AS, Stavanger</p>
             <p>Prosjektering og engineering av elektriske anlegg med høy grad av Ex-utførelse, inkludert PLS, frekvensomformere, instrumentering og pådragsorganer. Leveransene omfatter blant annet Z-015-enheter iht. NORSOK-standarder, tavler og Exde/Exp-kapslinger. Engineering-scope inkluderer løsningsvalg, teknisk tegning samt programmering av Simatic PLC og HMI. Har i tillegg arbeidet med prosjektering og teknisk støtte for modifikasjonsprosjekter på faste offshore olje- og gassinstallasjoner. Bistått installatør ved behov. </p>
         </div>
@@ -300,7 +463,7 @@
             <p>Prosjektering, oppfølging, MC, idriftsettelse og dokumentering av overflateinstallasjon på bore-rigger/plattformer. Installasjonens hensikt var å kunne utføre mudlogging og retningsborings tjenester. Mesteparten av prosjektene foregikk på nybygg. Prosjektene var tverrfaglige, men med hovedvekt på elektro og instrumentering. Å sørge for at installasjonen er iht. teknisk krav (NORSOK, DNV, IEC). Prosjektene omfattet som oftest en spesiallaget overtrykkskontainer. Dette innebar å designe, spesifisere, bestilling, oppfølging og installasjon av kontaineren.</p>
         </div>
         <div class="job">
-            <p class="date">sep. 06 - mai. 11</p>
+            <p class="date">sep. 06 - mai 11</p>
             <p><strong>Servicetekniker, Automatiker Elektriker Gr.L</strong> - Swire Oilfield Services AS, Sola</p>
             <p>Feilsøking, installasjon, idriftsettelse og nybygging av elektro/automasjons systemer som oftest var i Ex-utførelse og hadde integrert PLS. Systemene kunne være: overtrykkscontainere, kraner og annet spesialutstyr. Stor andel av oppgavene ble utført offshore og inshore. Læretiden og fagprøven for Elektriker ble gjennomført i denne perioden.</p>
         </div>
@@ -314,11 +477,11 @@
     <div class="section">
         <h2>Utvalgte Kurs</h2>
         <div class="course">
-            <p class="date">mars. 26</p>
+            <p class="date">mar. 26</p>
             <p><strong>Grunnleggende Sikkerhetskurs (GSK)</strong> - Maersk Training, Tananger</p>
         </div>
         <div class="course">
-            <p class="date">mars. 26</p>
+            <p class="date">mar. 26</p>
             <p><strong>FSE Lav- og høyspenning med førstehjelp</strong> - Trainor, Stavanger</p>
         </div>
         <div class="course">
@@ -393,33 +556,33 @@
 
     <div class="section">
         <h2>IT-kunnskaper</h2>
-        <p>OK+. Jeg har blant annet laget denne nettsiden fra grunnen av.</p>
+        <p>Solid. Programmerer i Python, C, ST og VBA, og web i HTML/CSS. Jobber til daglig med kunstig intelligens og utvikling av AI-agenter, og har bygget denne nettsiden fra grunnen av.</p>
     </div>
 
     <div class="section">
         <h2>Verv og Organisasjonsarbeid</h2>
         <div class="position">
-            <p class="date">Jul. 20 – Jun. 21</p>
+            <p class="date">jul. 20 – jun. 21</p>
             <p><strong>Distriktsleder DF4</strong> - Round Table Norge, Norge</p>
         </div>
         <div class="position">
-            <p class="date">Jul. 19 – Jun. 20</p>
+            <p class="date">jul. 19 – jun. 20</p>
             <p><strong>Vise Distriktsleder DF4</strong> - Round Table Norge, Norge</p>
         </div>
         <div class="position">
-            <p class="date">Jul. 19 – Jun. 20</p>
+            <p class="date">jul. 19 – jun. 20</p>
             <p><strong>Formann RT08</strong> - Round Table Sandnes, Sandnes</p>
         </div>
         <div class="position">
-            <p class="date">Jul. 18 – Jun. 19</p>
+            <p class="date">jul. 18 – jun. 19</p>
             <p><strong>Viseformann RT08</strong> - Round Table Sandnes, Sandnes</p>
         </div>
         <div class="position">
-            <p class="date">Jul. 16 – Jun. 18</p>
+            <p class="date">jul. 16 – jun. 18</p>
             <p><strong>Sekretær</strong> - Round Table Sandnes, Sandnes</p>
         </div>
         <div class="position">
-            <p class="date">Mar. 15 – Mar. 21</p>
+            <p class="date">mar. 15 – mar. 21</p>
             <p><strong>Sekretær</strong> - Julebygdtinget, Sandnes</p>
         </div>
     </div>
