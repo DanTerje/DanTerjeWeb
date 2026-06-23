@@ -53,8 +53,8 @@
             white-space: nowrap;
             overflow: hidden;
             width: 0;
-            animation: 
-                typing 3s steps(14, end) forwards,
+            animation:
+                typing 3s steps(15, end) forwards,
                 blink 1s step-end 3,
                 hideCursor 0s 3s forwards; /* Fjerner streken etter blinking */
             margin-bottom: -20px;
@@ -177,7 +177,7 @@
         /* Animasjoner */
         @keyframes typing {
             from { width: 0; }
-            to { width: 14ch; }
+            to { width: 15ch; }
         }
 
         @keyframes blink {
@@ -231,6 +231,6 @@
         console.log('reCAPTCHA Token (index.html):', token);
         });
     });
-    </script>    
+    </script>
 </body>
 </html>
